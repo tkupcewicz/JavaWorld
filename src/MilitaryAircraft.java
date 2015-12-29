@@ -3,22 +3,23 @@
  */
 import java.awt.Image;
 
-public class AircraftCarrier extends Ship {
+public class MilitaryAircraft extends Aircraft {
 
-    @Override
-    void drawImage() {
-
-    }
+    private int weaponType;
 
     @Override
     Image getImage() {
         return null;
     }
 
-    void SpawnAircraft() {
+    @Override
+    void drawImage() {
 
     }
 
+    void goToNearest(){
+
+    }
 
     @Override
     void moveTo() {
