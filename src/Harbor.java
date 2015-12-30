@@ -4,15 +4,6 @@
 
 import java.awt.Image;
 
-public class Harbor extends PhysicalObject {
+public abstract class Harbor extends Building {
 
-    @Override
-    Image getImage() {
-        return null;
-    }
-
-    @Override
-    void drawImage() {
-
-    }
 }
