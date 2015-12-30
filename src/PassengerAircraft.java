@@ -3,6 +3,7 @@
  */
 
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 
 public class PassengerAircraft extends Aircraft {
     private PassengerInfo passengerInfo;
@@ -13,7 +14,7 @@ public class PassengerAircraft extends Aircraft {
     }
 
     @Override
-    Image getImage() {
+    BufferedImage getImage() {
         return null;
     }
 

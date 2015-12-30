@@ -2,6 +2,7 @@
  * Created by Tymek on 13.10.15.
  */
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 
 public class PassengerShip extends Ship {
     private PassengerInfo passengerInfo ;
@@ -13,7 +14,7 @@ public class PassengerShip extends Ship {
     }
 
     @Override
-    Image getImage() {
+    BufferedImage getImage() {
         return null;
     }
 

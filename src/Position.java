@@ -1,9 +1,15 @@
+import javafx.geometry.Pos;
+
 /**
  * Created by Tymek on 13.10.15.
  */
 public class Position {
     private int x;
     private int y;
+
+    public Position(){
+
+    }
 
     public Position(int x, int y) {
         this.x = x;
