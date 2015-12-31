@@ -10,6 +10,9 @@ public abstract class Building extends PhysicalObject {
     public List getConnections() {
         return connections;
     }
+    public Building getConnections(int i){
+        return (Building) connections.get(i);
+    }
 
     public void setConnections(List connections) {
         this.connections = connections;

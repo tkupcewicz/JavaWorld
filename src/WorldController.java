@@ -88,7 +88,7 @@ class WorldController extends JPanel {
         for(int i = 0; i < mainMap.getPassengerAirports().length; i++){
             for(int j = 0; j < mainMap.getPassengerAirports()[i].getConnections().size(); j++){
                 final Path tempPath = Path.calcuatePath(mainMap.getPassengerAirports()[i].getPosition(),
-                        (Position) mainMap.getPassengerAirports()[i].getConnections().get(j));
+                        mainMap.getPassengerAirports()[i].getConnections(j).getPosition());
 
                 g2d.drawLine(tempPath.getOrigin().getX(),
                         tempPath.getOrigin().getY(),
@@ -107,7 +107,7 @@ class WorldController extends JPanel {
                     mainMap.getMilitaryAirports()[i].getPosition().getY() -25, 50,50);
             for(int j = 0; j < mainMap.getMilitaryAirports()[i].getConnections().size(); j++){
                 final Path tempPath = Path.calcuatePath(mainMap.getMilitaryAirports()[i].getPosition(),
-                        (Position) mainMap.getMilitaryAirports()[i].getConnections().get(j));
+                        mainMap.getMilitaryAirports()[i].getConnections(j).getPosition());
 
                 g2d.drawLine(tempPath.getOrigin().getX(),
                         tempPath.getOrigin().getY(),
@@ -121,7 +121,7 @@ class WorldController extends JPanel {
 
             for(int j = 0; j < mainMap.getCrossroadsArray()[i].getConnections().size(); j++){
                 final Path tempPath = Path.calcuatePath(mainMap.getCrossroadsArray()[i].getPosition(),
-                        (Position) mainMap.getCrossroadsArray()[i].getConnections().get(j));
+                        mainMap.getCrossroadsArray()[i].getConnections(j).getPosition());
 
                 g2d.drawLine(tempPath.getOrigin().getX(),
                         tempPath.getOrigin().getY(),

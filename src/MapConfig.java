@@ -26,7 +26,6 @@ public final class MapConfig {
 
     static {
         try {
-//            System.out.println(new File("resources/passAirport.png").getCanonicalPath());
                 passAirportImg = ImageIO.read(new File("resources/passAirport.png"));
 
         } catch (IOException e) {
@@ -37,68 +36,68 @@ public final class MapConfig {
 
     private static int pathWidth = 4;
 
-    private static Position[] passAirportPositions = {
-            new Position(150, 100),
-            new Position(450, 150),
-            new Position(300, 300),
-            new Position(100, 450),
-            new Position(500, 400),
-            new Position(230, 660),
-            new Position(480, 590)
+    private static PassengerAirport[] passengerAirports = {
+            new PassengerAirport(150, 100),
+            new PassengerAirport(450, 150),
+            new PassengerAirport(300, 300),
+            new PassengerAirport(100, 450),
+            new PassengerAirport(500, 400),
+            new PassengerAirport(230, 660),
+            new PassengerAirport(480, 590)
 
     };
 
-    private static Position[] miliAirportPositions = {
-            new Position(50, 200),
-            new Position(700, 300),
-            new Position(400, 700),
+    private static MilitaryAirport[] militaryAirports = {
+            new MilitaryAirport(50, 200),
+            new MilitaryAirport(700, 300),
+            new MilitaryAirport(400, 700),
     };
 
-    private static Position[] crossroadsPositions = {
-            new Position(265, 185),
-            new Position(470, 280),
-            new Position(290, 420),
-            new Position(400, 530)
+    private static Crossroad[] crossroads = {
+            new Crossroad(265, 185),
+            new Crossroad(470, 280),
+            new Crossroad(290, 420),
+            new Crossroad(400, 530)
     };
 
-    private static Position[][] passConnections = {
-            {crossroadsPositions[0]},
-            {crossroadsPositions[0], crossroadsPositions[1]},
-            {crossroadsPositions[0], crossroadsPositions[1], crossroadsPositions[2]},
-            {crossroadsPositions[2]},
-            {crossroadsPositions[1], crossroadsPositions[2], crossroadsPositions[3]},
-            {crossroadsPositions[2], crossroadsPositions[3]},
-            {crossroadsPositions[3]}
+    private static Building[][] passConnections = {
+            {crossroads[0]},
+            {crossroads[0], crossroads[1]},
+            {crossroads[0], crossroads[1], crossroads[2]},
+            {crossroads[2]},
+            {crossroads[1], crossroads[2], crossroads[3]},
+            {crossroads[2], crossroads[3]},
+            {crossroads[3]}
     };
 
-    private static Position[][] crossroadsConnections = {
-            {passAirportPositions[0], passAirportPositions[1], passAirportPositions[2],crossroadsPositions[1], miliAirportPositions[0]},
-            {passAirportPositions[1], passAirportPositions[2], crossroadsPositions[0], crossroadsPositions[2],passAirportPositions[4],miliAirportPositions[1]},
-            {passAirportPositions[2], passAirportPositions[3], passAirportPositions[4], passAirportPositions[5], crossroadsPositions[1], crossroadsPositions[3]},
-            {passAirportPositions[5], passAirportPositions[6], passAirportPositions[4], crossroadsPositions[2], miliAirportPositions[2]}
+    private static Building[][] crossroadsConnections = {
+            {passengerAirports[0], passengerAirports[1], passengerAirports[2],crossroads[1], militaryAirports[0]},
+            {passengerAirports[1], passengerAirports[2], crossroads[0], crossroads[2],passengerAirports[4],militaryAirports[1]},
+            {passengerAirports[2], passengerAirports[3], passengerAirports[4], passengerAirports[5], crossroads[1], crossroads[3]},
+            {passengerAirports[5], passengerAirports[6], passengerAirports[4], crossroads[2], militaryAirports[2]}
     };
 
-    private static Position[][] miliConnections = {
-            {crossroadsPositions[0]},
-            {crossroadsPositions[1]},
-            {crossroadsPositions[3]}
+    private static Building[][] miliConnections = {
+            {crossroads[0]},
+            {crossroads[1]},
+            {crossroads[3]}
     };
 
 
 
-    public static Position[] getPassAirportPositions() {
-        return passAirportPositions;
+    public static PassengerAirport[] getPassengerAirports() {
+        return passengerAirports;
     }
 
-    public static Position[] getMiliAirportPositions() {
-        return miliAirportPositions;
+    public static MilitaryAirport[] getMilitaryAirports() {
+        return militaryAirports;
     }
 
-    public static Position[] getCrossroadsPositions() {
-        return crossroadsPositions;
+    public static Crossroad[] getCrossroads() {
+        return crossroads;
     }
 
-    public static Position[][] getPassConnections() {
+    public static Building[][] getPassConnections() {
         return passConnections;
     }
 
@@ -110,11 +109,11 @@ public final class MapConfig {
         return passAirportImg;
     }
 
-    public static Position[][] getCrossroadsConnections() {
+    public static Building[][] getCrossroadsConnections() {
         return crossroadsConnections;
     }
 
-    public static Position[][] getMiliConnections() {
+    public static Building[][] getMiliConnections() {
         return miliConnections;
     }
 }

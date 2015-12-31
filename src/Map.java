@@ -7,50 +7,31 @@ import java.util.Arrays;
  * Created by Tymek on 28.12.2015.
  */
 public class Map {
-    private MilitaryAirport[] miliAirportArray;
-    private PassengerAirport[] passAirportArray;
-    private Crossroad[] crossroadsArray;
-
-
 
     public Map(){
-        crossroadsArray = new Crossroad[MapConfig.getCrossroadsPositions().length];
-
-        for(int i = 0; i < crossroadsArray.length; i++){
-            crossroadsArray[i] = new Crossroad();
-            crossroadsArray[i].setPosition(MapConfig.getCrossroadsPositions()[i].getX(), MapConfig.getCrossroadsPositions()[i].getY());
-            crossroadsArray[i].setConnections(new ArrayList<Position>(Arrays.asList(MapConfig.getCrossroadsConnections()[i])));
+        Crossroad[] tmpCross = MapConfig.getCrossroads();
+        for(int i = 0; i < tmpCross.length; i++){
+            tmpCross[i].setConnections(new ArrayList<Building>(Arrays.asList(MapConfig.getCrossroadsConnections()[i])));
         }
-
-        miliAirportArray = new MilitaryAirport[MapConfig.getMiliAirportPositions().length];
-
-        for(int i = 0; i < miliAirportArray.length; i++){
-            miliAirportArray[i] = new MilitaryAirport();
-            miliAirportArray[i].setPosition(MapConfig.getMiliAirportPositions()[i].getX(), MapConfig.getMiliAirportPositions()[i].getY());
-            miliAirportArray[i].setConnections(new ArrayList<Position>(Arrays.asList(MapConfig.getMiliConnections()[i])));
+        PassengerAirport[] tmpPass = MapConfig.getPassengerAirports();
+        for(int i = 0; i < tmpPass.length; i++){
+            tmpPass[i].setConnections(new ArrayList<Building>(Arrays.asList(MapConfig.getPassConnections()[i])));
         }
-
-        passAirportArray = new PassengerAirport[MapConfig.getPassAirportPositions().length];
-
-        for(int i = 0; i < passAirportArray.length; i++){
-            passAirportArray[i] = new PassengerAirport();
-            passAirportArray[i].setPosition(MapConfig.getPassAirportPositions()[i].getX(), MapConfig.getPassAirportPositions()[i].getY());
-            passAirportArray[i].setConnections(new ArrayList<Position>(Arrays.asList(MapConfig.getPassConnections()[i])));
-
+        MilitaryAirport[] tmpMili = MapConfig.getMilitaryAirports();
+        for(int i = 0; i < tmpMili.length; i++){
+            tmpMili[i].setConnections(new ArrayList<Building>(Arrays.asList(MapConfig.getMiliConnections()[i])));
         }
-
     }
 
-
     public MilitaryAirport[] getMilitaryAirports(){
-        return miliAirportArray;
+        return MapConfig.getMilitaryAirports();
     }
 
     public PassengerAirport[] getPassengerAirports() {
-        return passAirportArray;
+        return MapConfig.getPassengerAirports();
     }
 
     public Crossroad[] getCrossroadsArray() {
-        return crossroadsArray;
+        return MapConfig.getCrossroads();
     }
 }
