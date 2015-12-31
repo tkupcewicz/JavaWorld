@@ -15,12 +15,8 @@ public class PassengerAirport extends Airport {
     }
 
     public PassengerAirport() {
-//        try {
-//            img = ImageIO.read(this.getClass().getResource("resources/passAirport.png"));
-//        } catch (IOException exp) {
-//            exp.printStackTrace();
-//        }
         img = MapConfig.getPassAirportImg();
+
     }
 
     @Override

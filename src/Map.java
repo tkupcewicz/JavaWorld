@@ -19,6 +19,7 @@ public class Map {
         for(int i = 0; i < crossroadsArray.length; i++){
             crossroadsArray[i] = new Crossroad();
             crossroadsArray[i].setPosition(MapConfig.getCrossroadsPositions()[i].getX(), MapConfig.getCrossroadsPositions()[i].getY());
+            crossroadsArray[i].setConnections(new ArrayList<Position>(Arrays.asList(MapConfig.getCrossroadsConnections()[i])));
         }
 
         miliAirportArray = new MilitaryAirport[MapConfig.getMiliAirportPositions().length];
@@ -26,6 +27,7 @@ public class Map {
         for(int i = 0; i < miliAirportArray.length; i++){
             miliAirportArray[i] = new MilitaryAirport();
             miliAirportArray[i].setPosition(MapConfig.getMiliAirportPositions()[i].getX(), MapConfig.getMiliAirportPositions()[i].getY());
+            miliAirportArray[i].setConnections(new ArrayList<Position>(Arrays.asList(MapConfig.getMiliConnections()[i])));
         }
 
         passAirportArray = new PassengerAirport[MapConfig.getPassAirportPositions().length];
