@@ -8,8 +8,12 @@ import java.util.List;
  */
 public class Crossroad extends Building {
 
-    public Crossroad() {
+    public Crossroad(int posX, int posY) {
+        this.setPosition(posX,posY);
         this.setConnections(new ArrayList<Position>());
+    }
+
+    public Crossroad() {
     }
 
     @Override
