@@ -3,6 +3,7 @@
  */
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
 
 public class AircraftCarrier extends Ship {
 
@@ -25,4 +26,11 @@ public class AircraftCarrier extends Ship {
     void moveTo() {
 
     }
+
+    @Override
+    LinkedList<Position> randomizeRoute() {
+        return null;
+    }
+
+
 }

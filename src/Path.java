@@ -47,6 +47,5 @@ public class Path {
         Position bPrim = new Position((int)Math.round(xBp),(int)Math.round(yBp));
         Path wynik = new Path(aPrim,bPrim);
         return wynik;
-
     }
 }

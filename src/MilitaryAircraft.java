@@ -3,6 +3,7 @@
  */
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
 
 public class MilitaryAircraft extends Aircraft {
 
@@ -25,5 +26,10 @@ public class MilitaryAircraft extends Aircraft {
     @Override
     void moveTo() {
 
+    }
+
+    @Override
+    LinkedList<Position> randomizeRoute() {
+        return null;
     }
 }
