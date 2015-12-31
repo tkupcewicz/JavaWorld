@@ -12,6 +12,7 @@ public class PassengerAirport extends Airport {
     public PassengerAirport(int posX, int posY){
         this.setPosition(posX,posY);
         this.setConnections(new ArrayList<Position>());
+        img = MapConfig.getPassAirportImg();
     }
 
     public PassengerAirport() {
