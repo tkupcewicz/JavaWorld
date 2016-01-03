@@ -1,11 +1,12 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Created by Tymek on 30.12.2015.
  */
 public abstract class Building extends PhysicalObject {
-    private List connections;
+    private LinkedList<Building> connections;
 
     public List getConnections() {
         return connections;
@@ -14,7 +15,8 @@ public abstract class Building extends PhysicalObject {
         return (Building) connections.get(i);
     }
 
-    public void setConnections(List connections) {
+    public void setConnections(LinkedList connections) {
         this.connections = connections;
     }
+    public void addConnection(Building b) {this.connections.add(b);}
 }

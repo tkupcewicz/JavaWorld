@@ -3,18 +3,12 @@
  */
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.LinkedList;
 
 public class AircraftCarrier extends Ship {
 
     @Override
     void drawImage(Graphics g) {
 
-    }
-
-    @Override
-    BufferedImage getImage() {
-        return null;
     }
 
     void SpawnAircraft() {
@@ -28,7 +22,7 @@ public class AircraftCarrier extends Ship {
     }
 
     @Override
-    LinkedList<Building> randomizeRoute() {
+    Building randomizeRoute() {
         return null;
     }
 

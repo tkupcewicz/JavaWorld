@@ -9,16 +9,14 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
     private Building nextDestination;
     private LinkedList<Building> route;
     abstract void moveTo();
-    abstract LinkedList<Building> randomizeRoute();
+    abstract Building randomizeRoute();
 
     public void run() {
-        this.nextDestination = route.get(0);
+//        this.nextDestination = route.get(0);
 //        while(true){
 //           position = position + speed;
 //           fuel = fuel - fuelpersec;
-//           if(route[0] == crossroad){
-//              CHUJEMUJE SEMAFORY ;]]
-//           }
+
 //           else{
 //              if(position == route[0].position){
 //                 this.land();
@@ -26,5 +24,7 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
 //           }
 //
 //        }
-    }
+
+
+        }
 }

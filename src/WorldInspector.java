@@ -32,7 +32,6 @@ public class WorldInspector {
     }
 
     public void spawnPlane() {
-        System.out.println("Button pressed");
         Runnable r = new PassengerAircraft();
         Thread t = new Thread(r);
         t.start();

@@ -4,28 +4,23 @@
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.LinkedList;
 
 public class PassengerAircraft extends Aircraft {
     private PassengerInfo passengerInfo;
 
     public PassengerAircraft() {
 
-        this.setCurrentAirport(MapConfig.getPassengerAirports()[MapConfig.randInt(0, MapConfig.getPassengerAirports().length)]);
+        this.setCurrentAirport(MapConfig.getPassengerAirports()[MapConfig.randInt(0,MapConfig.getPassengerAirports().length - 1)]);
         this.passengerInfo = new PassengerInfo();
+
         this.randomizeRoute();
-        // this.setMaxFuel();
+
         System.out.println("Plane spawned at " + this.getCurrentAirport().getPosition().toString());
     }
 
     @Override
     void drawImage(Graphics g) {
 
-    }
-
-    @Override
-    BufferedImage getImage() {
-        return null;
     }
 
     void getPassengers() {
@@ -35,23 +30,6 @@ public class PassengerAircraft extends Aircraft {
     void leavePassengers() {
 
     }
-
-    /*
-    TODO:
-    Wywalic crossroadsy
-    Zostawic lotniska
-    Lotnisko ma (1,n) polaczen
-    Lista polaczen, babelkowo generowane skrzyzowania
-    Olac semafory az do konca projektu
-    Na jutro:
-    Generowanie trasy - lot do losowego lotniska
-    Poruszanie sie i generowanie nowej po dotarciu
-    Dummy funckje odbioru pasazerow, tankowania etc
-    Przerobienie syfu w kodzie
-    
-
-    */
-
 
     void refuel() {
 
@@ -67,7 +45,8 @@ public class PassengerAircraft extends Aircraft {
     }
 
     @Override
-    LinkedList<Building> randomizeRoute() {
+    Building randomizeRoute() {
+      //   this.getCurrentAirport().getConnections(MapConfig.randInt(0, this.getCurrentAirport().getConnections().size()-1));
         return null;
     }
 }
