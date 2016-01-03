@@ -11,8 +11,6 @@ public abstract class PhysicalObject {
     protected Graphics2D g2;
     private Position position;
     abstract void drawImage(Graphics g);
-    abstract BufferedImage getImage();
-
     public Position getPosition() {
         return position;
     }

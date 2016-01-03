@@ -24,11 +24,21 @@ Po doleceniu - nowa trasa
 public final class MapConfig {
 
     private static BufferedImage passAirportImg;
+    private static BufferedImage crossroadImg;
     private static Random rn = new Random();
 
     static {
         try {
                 passAirportImg = ImageIO.read(new File("resources/passAirport.png"));
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+    }
+    static {
+        try {
+            crossroadImg = ImageIO.read(new File("resources/crossroad.png"));
 
         } catch (IOException e) {
 
@@ -41,6 +51,8 @@ public final class MapConfig {
     private static int minAirPassengers = 5;
     private static int minRouteLength = 2;
     private static int maxRouteLength = 6;
+    private static boolean crossroadVisible = true;
+    private static boolean pathVisible = true;
 
 
     private static PassengerAirport[] passengerAirports = {
@@ -66,29 +78,6 @@ public final class MapConfig {
             new Crossroad(400, 530)
     };
 
-    private static Building[][] passConnections = {
-            {crossroads[0]},
-            {crossroads[0], crossroads[1]},
-            {crossroads[0], crossroads[1], crossroads[2]},
-            {crossroads[2]},
-            {crossroads[1], crossroads[2], crossroads[3]},
-            {crossroads[2], crossroads[3]},
-            {crossroads[3]}
-    };
-
-    private static Building[][] crossroadsConnections = {
-            {passengerAirports[0], passengerAirports[1], passengerAirports[2],crossroads[1], militaryAirports[0]},
-            {passengerAirports[1], passengerAirports[2], crossroads[0], crossroads[2],passengerAirports[4],militaryAirports[1]},
-            {passengerAirports[2], passengerAirports[3], passengerAirports[4], passengerAirports[5], crossroads[1], crossroads[3]},
-            {passengerAirports[5], passengerAirports[6], passengerAirports[4], crossroads[2], militaryAirports[2]}
-    };
-
-    private static Building[][] miliConnections = {
-            {crossroads[0]},
-            {crossroads[1]},
-            {crossroads[3]}
-    };
-
 
 
     public static PassengerAirport[] getPassengerAirports() {
@@ -109,18 +98,6 @@ public final class MapConfig {
 
     public static BufferedImage getPassAirportImg() {
         return passAirportImg;
-    }
-
-    public static Building[][] getPassConnections() {
-        return passConnections;
-    }
-
-    public static Building[][] getCrossroadsConnections() {
-        return crossroadsConnections;
-    }
-
-    public static Building[][] getMiliConnections() {
-        return miliConnections;
     }
 
     public static Random getRn() {
@@ -152,5 +129,17 @@ public final class MapConfig {
 
     public static int getMaxRouteLength() {
         return maxRouteLength;
+    }
+
+    public static BufferedImage getCrossroadImg() {
+        return crossroadImg;
+    }
+
+    public static boolean isCrossroadVisible() {
+        return crossroadVisible;
+    }
+
+    public static boolean isPathVisible() {
+        return pathVisible;
     }
 }

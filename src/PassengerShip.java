@@ -3,7 +3,6 @@
  */
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.LinkedList;
 
 public class PassengerShip extends Ship {
     private PassengerInfo passengerInfo ;
@@ -15,17 +14,12 @@ public class PassengerShip extends Ship {
     }
 
     @Override
-    BufferedImage getImage() {
-        return null;
-    }
-
-    @Override
     void moveTo() {
 
     }
 
     @Override
-    LinkedList<Building> randomizeRoute() {
+    Building randomizeRoute() {
         return null;
     }
 }

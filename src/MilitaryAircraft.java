@@ -3,16 +3,10 @@
  */
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.LinkedList;
 
 public class MilitaryAircraft extends Aircraft {
 
     private int weaponType;
-
-    @Override
-    BufferedImage getImage() {
-        return null;
-    }
 
     @Override
     void drawImage(Graphics g) {
@@ -29,7 +23,7 @@ public class MilitaryAircraft extends Aircraft {
     }
 
     @Override
-    LinkedList<Building> randomizeRoute() {
+    Building randomizeRoute() {
         return null;
     }
 }

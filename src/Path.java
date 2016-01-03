@@ -1,9 +1,11 @@
 /**
  * Created by Tymek on 15.10.15.
  */
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.math.*;
 
-public class Path {
+public class Path extends PhysicalObject{
     private Position destination;
     private Position origin;
 
@@ -32,7 +34,7 @@ public class Path {
         this.origin = origin;
     }
 
-    public static Path calcuatePath(Position A, Position B){
+    public static Path calculatePath(Position A, Position B){
         int xA = A.getX();
         int yA = A.getY();
         int xB = B.getX();
@@ -47,5 +49,18 @@ public class Path {
         Position bPrim = new Position((int)Math.round(xBp),(int)Math.round(yBp));
         Path wynik = new Path(aPrim,bPrim);
         return wynik;
+    }
+
+    @Override
+    void drawImage(Graphics g) {
+        if(MapConfig.isPathVisible()){
+            Graphics2D g2d = (Graphics2D) g;
+            Path tempPath = Path.calculatePath(this.getOrigin(), this.getDestination());
+            g2d.drawLine(tempPath.getOrigin().getX(),
+                    tempPath.getOrigin().getY(),
+                    tempPath.getDestination().getX(),
+                    tempPath.getDestination().getY());
+            System.out.println("Drawing path");
+        }
     }
 }
