@@ -6,7 +6,7 @@ import javax.swing.*;
 
 class WorldController extends JPanel {
 
-    static private WorldController worldController;
+    static public WorldController worldController;
     static private WorldInspector worldInspector;
 
     private Position selected;
@@ -96,10 +96,7 @@ class WorldController extends JPanel {
                         tempPath.getDestination().getY());
 
             }
-            g2d.drawImage(mainMap.getPassengerAirports()[i].getImage(),
-                    mainMap.getPassengerAirports()[i].getPosition().getX() - MapConfig.getPassAirportImg().getWidth()/2,
-                    mainMap.getPassengerAirports()[i].getPosition().getY() - MapConfig.getPassAirportImg().getHeight()/2,
-                    this);
+            mainMap.getPassengerAirports()[i].drawImage(g);
         }
         for(int i = 0; i < mainMap.getMilitaryAirports().length; i++){
             //g2d.drawImage();
@@ -140,6 +137,7 @@ class WorldController extends JPanel {
 
         worldController = new WorldController();
         worldInspector = new WorldInspector();
+        worldInspector.spawnPlane();
 
 
     }

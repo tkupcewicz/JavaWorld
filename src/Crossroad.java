@@ -17,7 +17,7 @@ public class Crossroad extends Building {
     }
 
     @Override
-    void drawImage() {
+    void drawImage(Graphics g) {
 
     }
 

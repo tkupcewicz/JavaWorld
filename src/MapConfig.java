@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 /**
  * Created by Tymek on 30.12.2015.
@@ -23,6 +24,7 @@ Po doleceniu - nowa trasa
 public final class MapConfig {
 
     private static BufferedImage passAirportImg;
+    private static Random rn = new Random();
 
     static {
         try {
@@ -35,6 +37,11 @@ public final class MapConfig {
     }
 
     private static int pathWidth = 4;
+    private static int maxAirPassengers = 20;
+    private static int minAirPassengers = 5;
+    private static int minRouteLength = 2;
+    private static int maxRouteLength = 6;
+
 
     private static PassengerAirport[] passengerAirports = {
             new PassengerAirport(150, 100),
@@ -44,7 +51,6 @@ public final class MapConfig {
             new PassengerAirport(500, 400),
             new PassengerAirport(230, 660),
             new PassengerAirport(480, 590)
-
     };
 
     private static MilitaryAirport[] militaryAirports = {
@@ -97,10 +103,6 @@ public final class MapConfig {
         return crossroads;
     }
 
-    public static Building[][] getPassConnections() {
-        return passConnections;
-    }
-
     public static int getPathWidth() {
         return pathWidth;
     }
@@ -109,11 +111,46 @@ public final class MapConfig {
         return passAirportImg;
     }
 
+    public static Building[][] getPassConnections() {
+        return passConnections;
+    }
+
     public static Building[][] getCrossroadsConnections() {
         return crossroadsConnections;
     }
 
     public static Building[][] getMiliConnections() {
         return miliConnections;
+    }
+
+    public static Random getRn() {
+        return rn;
+    }
+
+    public static void setRn(Random rn) {
+        MapConfig.rn = rn;
+    }
+
+    public static int getMaxAirPassengers() {
+        return maxAirPassengers;
+    }
+
+    public static int getMinAirPassengers() {
+        return minAirPassengers;
+    }
+
+    public static int randInt(int min, int max) {
+
+        int randomNum = rn.nextInt((max - min) + 1) + min;
+
+        return randomNum;
+    }
+
+    public static int getMinRouteLength() {
+        return minRouteLength;
+    }
+
+    public static int getMaxRouteLength() {
+        return maxRouteLength;
     }
 }

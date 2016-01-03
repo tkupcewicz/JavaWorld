@@ -24,7 +24,7 @@ public class MilitaryAirport extends Airport {
     }
 
     @Override
-    void drawImage() {
+    void drawImage(Graphics g) {
 
     }
 
