@@ -1,7 +1,7 @@
 /**
  * Created by Tymek on 13.10.15.
  */
-import java.awt.Image;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
@@ -10,7 +10,7 @@ public class PassengerShip extends Ship {
     private String companyName;
 
     @Override
-    void drawImage() {
+    void drawImage(Graphics g) {
 
     }
 
@@ -25,7 +25,7 @@ public class PassengerShip extends Ship {
     }
 
     @Override
-    LinkedList<Position> randomizeRoute() {
+    LinkedList<Building> randomizeRoute() {
         return null;
     }
 }
