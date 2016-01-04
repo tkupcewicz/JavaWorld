@@ -25,33 +25,15 @@ public final class MapConfig {
 
     private static BufferedImage passAirportImg;
     private static BufferedImage crossroadImg;
+    private static BufferedImage passAircraftImg;
     private static Random rn = new Random();
-
-    static {
-        try {
-                passAirportImg = ImageIO.read(new File("resources/passAirport.png"));
-
-        } catch (IOException e) {
-
-            e.printStackTrace();
-        }
-    }
-    static {
-        try {
-            crossroadImg = ImageIO.read(new File("resources/crossroad.png"));
-
-        } catch (IOException e) {
-
-            e.printStackTrace();
-        }
-    }
 
     private static int pathWidth = 4;
     private static int maxAirPassengers = 20;
     private static int minAirPassengers = 5;
     private static int minRouteLength = 2;
     private static int maxRouteLength = 6;
-    private static boolean crossroadVisible = true;
+    private static boolean crossroadVisible = false;
     private static boolean pathVisible = true;
 
 
@@ -77,6 +59,34 @@ public final class MapConfig {
             new Crossroad(290, 420),
             new Crossroad(400, 530)
     };
+
+    static {
+        try {
+            passAirportImg = ImageIO.read(new File("resources/passAirport.png"));
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+    }
+    static {
+        try {
+            crossroadImg = ImageIO.read(new File("resources/crossroad.png"));
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+    }
+    static {
+        try {
+            passAircraftImg = ImageIO.read(new File("resources/passPlane.png"));
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+    }
 
 
 
@@ -141,5 +151,9 @@ public final class MapConfig {
 
     public static boolean isPathVisible() {
         return pathVisible;
+    }
+
+    public static BufferedImage getPassAircraftImg() {
+        return passAircraftImg;
     }
 }

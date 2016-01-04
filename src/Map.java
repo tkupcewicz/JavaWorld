@@ -12,7 +12,7 @@ public class Map {
 
     private LinkedList<Path> pathsList;
     private LinkedList<Crossroad> crossroadsList;
-    private LinkedList<PhysicalObject> objectsToDraw;
+    private static LinkedList<PhysicalObject> objectsToDraw;
 
     public Map(){
 

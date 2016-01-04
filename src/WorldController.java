@@ -36,7 +36,7 @@ public class WorldController extends JPanel {
         mainFrame.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                setSelected(new Position(e.getX(),e.getY()));
+                setSelected(new Position(e.getX(), e.getY()));
                 worldInspector.setLabel1(new Integer(e.getX()).toString());
                 worldInspector.setLabel2(new Integer(e.getY()).toString());
             }
@@ -72,28 +72,26 @@ public class WorldController extends JPanel {
         Runnable r = () -> {
             while (true) {
                 repaint();
+                //System.out.println("REPAINT");
                 try {
                     Thread.sleep(16);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
             }
         };
+        Thread t = new Thread(r);
+        t.start();
     }
 
     @Override
     public void paint(Graphics g) {
-
-        Graphics2D g2d = (Graphics2D) g;
-
         for (int i = 0; i < mainMap.getObjectsToDraw().size(); i++) {
             mainMap.getObjectsToDraw().get(i).drawImage(g);
         }
     }
 
-
-    public static void main(String args[]){
+    public static void main(String args[]) {
         mainMap = new Map();
         worldController = new WorldController();
         worldInspector = new WorldInspector();
@@ -101,6 +99,7 @@ public class WorldController extends JPanel {
 
     }
 
-
-
+    public static Map getMainMap() {
+        return mainMap;
+    }
 }

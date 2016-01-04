@@ -9,18 +9,22 @@ public class PassengerAircraft extends Aircraft {
     private PassengerInfo passengerInfo;
 
     public PassengerAircraft() {
-
-        this.setCurrentAirport(MapConfig.getPassengerAirports()[MapConfig.randInt(0,MapConfig.getPassengerAirports().length - 1)]);
+        WorldController.getMainMap().addObjectToDraw(this);
+        this.setCurrentBuilding(MapConfig.getPassengerAirports()[MapConfig.randInt(0,
+                MapConfig.getPassengerAirports().length - 1)]);
+        this.setPosition(this.getCurrentBuilding().getPosition().getX(), this.getCurrentBuilding().getPosition().getY());
         this.passengerInfo = new PassengerInfo();
-
         this.randomizeRoute();
-
-        System.out.println("Plane spawned at " + this.getCurrentAirport().getPosition().toString());
+        this.setSpeed(2);
     }
 
     @Override
     void drawImage(Graphics g) {
-
+        g.drawImage(
+                MapConfig.getPassAircraftImg(),
+                this.getPosition().getX() - MapConfig.getPassAircraftImg().getWidth()/2,
+                this.getPosition().getY() - MapConfig.getPassAircraftImg().getHeight()/2,
+                WorldController.getWorldController());
     }
 
     void getPassengers() {
@@ -45,8 +49,8 @@ public class PassengerAircraft extends Aircraft {
     }
 
     @Override
-    Building randomizeRoute() {
-      //   this.getCurrentAirport().getConnections(MapConfig.randInt(0, this.getCurrentAirport().getConnections().size()-1));
-        return null;
+    void randomizeRoute() {
+         this.setNextDestination((Building) this.getCurrentBuilding().getConnections().get(MapConfig.randInt(0,
+                this.getCurrentBuilding().getConnections().size() - 1)));
     }
 }

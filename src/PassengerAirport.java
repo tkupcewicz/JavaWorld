@@ -30,7 +30,6 @@ public class PassengerAirport extends Airport {
                 this.getPosition().getX() - MapConfig.getPassAirportImg().getWidth()/2,
                 this.getPosition().getY() - MapConfig.getPassAirportImg().getHeight()/2,
                 WorldController.getWorldController());
-        System.out.println("Drawing airport");
     }
 
     @Override
