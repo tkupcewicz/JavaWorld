@@ -23,7 +23,6 @@ public class MilitaryAircraft extends Aircraft {
     }
 
     @Override
-    Building randomizeRoute() {
-        return null;
+    void randomizeRoute() {
     }
 }

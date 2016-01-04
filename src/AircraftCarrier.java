@@ -22,8 +22,8 @@ public class AircraftCarrier extends Ship {
     }
 
     @Override
-    Building randomizeRoute() {
-        return null;
+    void randomizeRoute() {
+
     }
 
 

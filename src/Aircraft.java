@@ -5,7 +5,6 @@ public abstract class Aircraft extends Vehicle{
     private float maxFuel;
     private float actualFuel;
     private int stuffCount;
-    private Airport currentAirport;
 
     public float getMaxFuel() {
         return maxFuel;
@@ -31,11 +30,4 @@ public abstract class Aircraft extends Vehicle{
         this.stuffCount = stuffCount;
     }
 
-    public Airport getCurrentAirport() {
-        return currentAirport;
-    }
-
-    public void setCurrentAirport(Airport currentAirport) {
-        this.currentAirport = currentAirport;
-    }
 }

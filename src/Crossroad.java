@@ -19,13 +19,13 @@ public class Crossroad extends Building {
 
     @Override
     void drawImage(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(
-                MapConfig.getCrossroadImg(),
-                this.getPosition().getX() - MapConfig.getCrossroadImg().getWidth()/2,
-                this.getPosition().getY() - MapConfig.getCrossroadImg().getHeight()/2,
-                WorldController.getWorldController());
-        System.out.println("Drawing crossroad at " + this.getPosition().toString());
+       if(MapConfig.isCrossroadVisible()){
+           g.drawImage(
+                   MapConfig.getCrossroadImg(),
+                   this.getPosition().getX() - MapConfig.getCrossroadImg().getWidth()/2,
+                   this.getPosition().getY() - MapConfig.getCrossroadImg().getHeight()/2,
+                   WorldController.getWorldController());
+       }
     }
 
 }

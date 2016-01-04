@@ -19,7 +19,6 @@ public class PassengerShip extends Ship {
     }
 
     @Override
-    Building randomizeRoute() {
-        return null;
+    void randomizeRoute() {
     }
 }

@@ -34,17 +34,17 @@ public class Path extends PhysicalObject{
         this.origin = origin;
     }
 
-    public static Path calculatePath(Position A, Position B){
+    public static Path calculatePath(Position A, Position B, int pathWidth){
         int xA = A.getX();
         int yA = A.getY();
         int xB = B.getX();
         int yB = B.getY();
         double d = Math.sqrt(Math.pow((xA - xB), 2) + Math.pow((yA - yB),2));
 
-        double xAp = xA + MapConfig.getPathWidth() * (yB - yA) / d;
-        double yAp = yA + MapConfig.getPathWidth() * (xA - xB) / d;
-        double xBp = xB + MapConfig.getPathWidth() * (yB - yA) / d;
-        double yBp = yB + MapConfig.getPathWidth() * (xA - xB) / d;
+        double xAp = xA + pathWidth * (yB - yA) / d;
+        double yAp = yA + pathWidth * (xA - xB) / d;
+        double xBp = xB + pathWidth * (yB - yA) / d;
+        double yBp = yB + pathWidth * (xA - xB) / d;
         Position aPrim = new Position((int)Math.round(xAp),(int)Math.round(yAp));
         Position bPrim = new Position((int)Math.round(xBp),(int)Math.round(yBp));
         Path wynik = new Path(aPrim,bPrim);
@@ -55,12 +55,11 @@ public class Path extends PhysicalObject{
     void drawImage(Graphics g) {
         if(MapConfig.isPathVisible()){
             Graphics2D g2d = (Graphics2D) g;
-            Path tempPath = Path.calculatePath(this.getOrigin(), this.getDestination());
+            Path tempPath = Path.calculatePath(this.getOrigin(), this.getDestination(), MapConfig.getPathWidth());
             g2d.drawLine(tempPath.getOrigin().getX(),
                     tempPath.getOrigin().getY(),
                     tempPath.getDestination().getX(),
                     tempPath.getDestination().getY());
-            System.out.println("Drawing path");
         }
     }
 }
