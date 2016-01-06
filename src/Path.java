@@ -3,7 +3,6 @@
  */
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.math.*;
 
 public class Path extends PhysicalObject{
     private Position destination;
@@ -35,10 +34,10 @@ public class Path extends PhysicalObject{
     }
 
     public static Path calculatePath(Position A, Position B, int pathWidth){
-        int xA = A.getX();
-        int yA = A.getY();
-        int xB = B.getX();
-        int yB = B.getY();
+        float xA = A.getX();
+        float yA = A.getY();
+        float xB = B.getX();
+        float yB = B.getY();
         double d = Math.sqrt(Math.pow((xA - xB), 2) + Math.pow((yA - yB),2));
 
         double xAp = xA + pathWidth * (yB - yA) / d;
@@ -56,10 +55,15 @@ public class Path extends PhysicalObject{
         if(MapConfig.isPathVisible()){
             Graphics2D g2d = (Graphics2D) g;
             Path tempPath = Path.calculatePath(this.getOrigin(), this.getDestination(), MapConfig.getPathWidth());
-            g2d.drawLine(tempPath.getOrigin().getX(),
-                    tempPath.getOrigin().getY(),
-                    tempPath.getDestination().getX(),
-                    tempPath.getDestination().getY());
+            g2d.drawLine((int) tempPath.getOrigin().getX(),
+                    (int) tempPath.getOrigin().getY(),
+                    (int) tempPath.getDestination().getX(),
+                    (int) tempPath.getDestination().getY());
         }
+    }
+
+    @Override
+    BufferedImage getImage() {
+        return null;
     }
 }

@@ -8,14 +8,15 @@ public class WorldController extends JPanel {
     private static WorldController worldController;
     private static WorldInspector worldInspector;
     private static Map mainMap;
+    private Rectangle rect;
 
-    private Position selected;
+    private PhysicalObject selected;
 
-    public Position getSelected() {
+    public PhysicalObject getSelected() {
         return selected;
     }
 
-    public void setSelected(Position selected) {
+    public void setSelected(PhysicalObject selected) {
         this.selected = selected;
     }
 
@@ -36,9 +37,25 @@ public class WorldController extends JPanel {
         mainFrame.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                setSelected(new Position(e.getX(), e.getY()));
+                //setSelected(new Position(e.getX(), e.getY()));
                 worldInspector.setLabel1(new Integer(e.getX()).toString());
                 worldInspector.setLabel2(new Integer(e.getY()).toString());
+                for (PhysicalObject object:mainMap.getObjectsToDraw()) {
+                    rect = null;
+                    if(object.getImage() != null) {
+                        rect = new Rectangle((int) object.getPosition().getX() - object.getImage().getWidth() / 2,
+                                (int) object.getPosition().getY() - object.getImage().getHeight() / 2,
+                                object.getImage().getWidth(),
+                                object.getImage().getHeight());
+
+//                        System.out.println(object.toString());
+                        if (rect.contains(e.getX(), e.getY() - 24)) {
+                            setSelected(object);
+                            System.out.println(object.getPosition().toString());
+                            break;
+                        }
+                    }
+                }
             }
 
             @Override
@@ -89,6 +106,9 @@ public class WorldController extends JPanel {
         for (int i = 0; i < mainMap.getObjectsToDraw().size(); i++) {
             mainMap.getObjectsToDraw().get(i).drawImage(g);
         }
+        if(rect != null){
+            g.drawRect(rect.x, rect.y, rect.height, rect.width);
+        }
     }
 
     public static void main(String args[]) {
@@ -96,6 +116,10 @@ public class WorldController extends JPanel {
         worldController = new WorldController();
         worldInspector = new WorldInspector();
         worldInspector.spawnPlane();
+        for (int i = 0; i < mainMap.getObjectsToDraw().size(); i++) {
+            System.out.println(mainMap.getObjectsToDraw().get(i).toString());
+            System.out.println(mainMap.getObjectsToDraw().get(i).getPosition().toString());
+        }
 
     }
 

@@ -3,10 +3,21 @@
  */
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.UUID;
 
 public class MilitaryAircraft extends Aircraft {
 
-    private int weaponType;
+    private Weapon weaponType;
+
+    public MilitaryAircraft(){
+        WorldController.getMainMap().addObjectToDraw(this);
+        this.setCurrentBuilding(MapConfig.getMilitaryAirports()[MapConfig.randInt(0,
+                MapConfig.getMilitaryAirports().length - 1)]);
+        this.setPosition(this.getCurrentBuilding().getPosition().getX(),
+                this.getCurrentBuilding().getPosition().getY());
+        this.setUniqueId(UUID.randomUUID().toString());
+        this.weaponType = Weapon.getRandom();
+    }
 
     @Override
     void drawImage(Graphics g) {
@@ -23,6 +34,8 @@ public class MilitaryAircraft extends Aircraft {
     }
 
     @Override
-    void randomizeRoute() {
+    BufferedImage getImage() {
+        return MapConfig.getMiliAircraftImg();
     }
+
 }

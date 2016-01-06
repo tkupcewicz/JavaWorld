@@ -4,27 +4,34 @@
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.UUID;
 
 public class PassengerAircraft extends Aircraft {
     private PassengerInfo passengerInfo;
 
     public PassengerAircraft() {
+        this.setUniqueId(UUID.randomUUID().toString());
         WorldController.getMainMap().addObjectToDraw(this);
         this.setCurrentBuilding(MapConfig.getPassengerAirports()[MapConfig.randInt(0,
                 MapConfig.getPassengerAirports().length - 1)]);
         this.setPosition(this.getCurrentBuilding().getPosition().getX(), this.getCurrentBuilding().getPosition().getY());
         this.passengerInfo = new PassengerInfo();
-        this.randomizeRoute();
-        this.setSpeed(2);
+
+        this.setSpeed(3);
     }
 
     @Override
     void drawImage(Graphics g) {
         g.drawImage(
                 MapConfig.getPassAircraftImg(),
-                this.getPosition().getX() - MapConfig.getPassAircraftImg().getWidth()/2,
-                this.getPosition().getY() - MapConfig.getPassAircraftImg().getHeight()/2,
+                (int) this.getPosition().getX() - MapConfig.getPassAircraftImg().getWidth()/2,
+                (int) this.getPosition().getY() - MapConfig.getPassAircraftImg().getHeight()/2,
                 WorldController.getWorldController());
+    }
+
+    @Override
+    BufferedImage getImage() {
+        return MapConfig.getPassAircraftImg();
     }
 
     void getPassengers() {
@@ -35,7 +42,7 @@ public class PassengerAircraft extends Aircraft {
 
     }
 
-    void refuel() {
+    public void refuel() {
 
     }
 
@@ -49,8 +56,8 @@ public class PassengerAircraft extends Aircraft {
     }
 
     @Override
-    void randomizeRoute() {
-         this.setNextDestination((Building) this.getCurrentBuilding().getConnections().get(MapConfig.randInt(0,
-                this.getCurrentBuilding().getConnections().size() - 1)));
+    public void arrive(){
+        this.refuel();
     }
+
 }

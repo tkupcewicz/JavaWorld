@@ -7,63 +7,84 @@ import static java.lang.Math.atan2;
  */
 
 public abstract class Vehicle extends PhysicalObject implements Runnable {
-    private int uniqueId;
+    private String uniqueId;
     private int speed;
     private Building nextDestination;
     private Building currentBuilding;
+    private LinkedList<Building> route;
     abstract void moveTo();
-    abstract void randomizeRoute();
     private boolean moving;
 
-    double calculateXVel(int posX, int posY, int tarX, int tarY){
-        double angle = atan2(tarY-posY, tarX-posX);
-        double xVel = speed * Math.cos(angle);
+    float calculateXVel(float posX, float posY, float tarX, float tarY){
+        float angle = (float) atan2(tarY-posY, tarX-posX);
+        float xVel = (float) (speed * Math.cos(angle));
         return xVel;
     }
-    double calculateYVel(int posX, int posY, int tarX, int tarY){
-        double angle = atan2(tarY-posY, tarX-posX);
-        double yVel = speed * Math.sin(angle);
+    float calculateYVel(float posX, float posY, float tarX, float tarY){
+        float angle = (float) atan2(tarY-posY, tarX-posX);
+        float yVel = (float) (speed * Math.sin(angle));
         return yVel;
     }
 
+    void randomizeRoute(Building b){
+        Building tmp1 = b;
+        for (int i = 0; i < MapConfig.randInt(MapConfig.getMinRouteLength(), MapConfig.getMaxRouteLength()); i++) {
+            Building tmp2 = tmp1.getConnections().get(MapConfig.randInt(0, tmp1.getConnections().size() - 1));
+            addToRoute(tmp2);
+            tmp1 = tmp2;
+        }
+    }
+
     public void run() {
-        this.randomizeRoute();
-        double xVel = 0;
-        double yVel = 0;
+        this.route = new LinkedList<>();
+        this.randomizeRoute(this.currentBuilding);
+        this.setNextDestination(route.get(0));
+        this.route.remove(0);
+        float xVel = 0;
+        float yVel = 0;
         while(true) {
             if(!this.isMoving()){
-                System.out.println("Isn't moving");
+                Path temp = Path.calculatePath(this.getCurrentBuilding().getPosition(),
+                        this.getNextDestination().getPosition(), 30);
 
+                //WorldController.getMainMap().addObjectToDraw(temp);
+                xVel = calculateXVel(temp.getDestination().getX(), temp.getDestination().getY(), temp.getOrigin().getX(), temp.getOrigin().getY());
+                yVel = calculateYVel(temp.getDestination().getX(), temp.getDestination().getY(), temp.getOrigin().getX(), temp.getOrigin().getY());
 
-//                Path temp = Path.calculatePath(this.getCurrentBuilding().getPosition(),
-//                        this.getNextDestination().getPosition());
-//
-//
-//                WorldController.getMainMap().addObjectToDraw(temp);
-//                xVel = calculateXVel(temp.getDestination().getX(), temp.getDestination().getY(), temp.getOrigin().getX(), temp.getOrigin().getY());
-//                yVel = calculateYVel(temp.getDestination().getX(), temp.getDestination().getY(), temp.getOrigin().getX(), temp.getOrigin().getY());
-
-                xVel = calculateXVel(this.getCurrentBuilding().getPosition().getX(), this.getCurrentBuilding().getPosition().getY(), this.getNextDestination().getPosition().getX(), this.getNextDestination().getPosition().getY());
-                yVel = calculateYVel(this.getCurrentBuilding().getPosition().getX(), this.getCurrentBuilding().getPosition().getY(), this.getNextDestination().getPosition().getX(), this.getNextDestination().getPosition().getY());
+//                xVel = calculateXVel(this.getCurrentBuilding().getPosition().getX(), this.getCurrentBuilding().getPosition().getY(), this.getNextDestination().getPosition().getX(), this.getNextDestination().getPosition().getY());
+//                yVel = calculateYVel(this.getCurrentBuilding().getPosition().getX(), this.getCurrentBuilding().getPosition().getY(), this.getNextDestination().getPosition().getX(), this.getNextDestination().getPosition().getY());
                 this.setMoving(true);
             }
             else{
-                System.out.println("Is moving" + this.getPosition().toString());
-                int tmpx = this.getPosition().getX();
-                int tmpy = this.getPosition().getY();
-                tmpx = tmpx +  (int) Math.round(xVel);
-                tmpy = tmpy +  (int) Math.round(yVel);
-                System.out.println(xVel + " " + yVel);
+                float tmpx = this.getPosition().getX();
+                float tmpy = this.getPosition().getY();
+                tmpx = tmpx + xVel;
+                tmpy = tmpy + yVel;
                 this.setPosition(tmpx, tmpy);
-                if(this.getPosition().equals(this.nextDestination.getPosition())){
+
+                if((Math.abs(this.getPosition().getX() -
+                        this.getNextDestination().getPosition().getX())) < this.getSpeed() &&
+                        (Math.abs(this.getPosition().getY() -
+                                this.getNextDestination().getPosition().getY())) < this.getSpeed()) {
+
                     this.setMoving(false);
+                    this.setPosition(this.nextDestination.getPosition());
+                    this.setCurrentBuilding(this.getNextDestination());
+                    this.arrive();
+                    if(this.route.size() == 1){
+                        this.setNextDestination(this.route.get(0));
+                        this.route.remove(0);
+                        this.randomizeRoute(this.nextDestination);
+                    }
+                    else{
+                        this.setNextDestination(this.route.get(0));
+                        this.route.remove(0);
+                    }
                 }
             }
 
-
-
             try {
-                Thread.sleep(256);
+                Thread.sleep(16);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -100,5 +121,24 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
 
     public void setMoving(boolean moving) {
         this.moving = moving;
+    }
+
+    public LinkedList<Building> getRoute() {
+        return route;
+    }
+
+    public void addToRoute(Building b){
+        route.add(b);
+    }
+
+    public void arrive(){
+
+    }
+    public void depart(){
+
+    }
+
+    public void setUniqueId(String uniqueId) {
+        this.uniqueId = uniqueId;
     }
 }

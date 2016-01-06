@@ -14,11 +14,13 @@ public class PassengerShip extends Ship {
     }
 
     @Override
+    BufferedImage getImage() {
+        return null;
+    }
+
+    @Override
     void moveTo() {
 
     }
 
-    @Override
-    void randomizeRoute() {
-    }
 }

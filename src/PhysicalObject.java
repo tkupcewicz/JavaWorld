@@ -8,14 +8,19 @@ import java.awt.image.BufferedImage;
 public abstract class PhysicalObject {
 
     protected BufferedImage img;
-    protected Graphics2D g2;
     private Position position;
     abstract void drawImage(Graphics g);
     public Position getPosition() {
         return position;
     }
 
-    public void setPosition(int posX, int posY) {
+    public void setPosition(float posX, float posY) {
         position = new Position(posX, posY);
     }
+
+    public void setPosition(Position pos){
+        position = new Position(pos.getX(), pos.getY());
+    }
+
+    abstract BufferedImage getImage();
 }
