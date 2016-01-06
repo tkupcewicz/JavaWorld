@@ -6,6 +6,10 @@ public abstract class Aircraft extends Vehicle{
     private float actualFuel;
     private int stuffCount;
 
+    public void refuel(){
+        this.actualFuel = this.maxFuel;
+    }
+
     public float getMaxFuel() {
         return maxFuel;
     }

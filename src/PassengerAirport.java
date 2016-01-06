@@ -1,12 +1,8 @@
 /**
  * Created by Tymek on 29.10.15.
  */
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 
@@ -27,8 +23,8 @@ public class PassengerAirport extends Airport {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(
                 MapConfig.getPassAirportImg(),
-                this.getPosition().getX() - MapConfig.getPassAirportImg().getWidth()/2,
-                this.getPosition().getY() - MapConfig.getPassAirportImg().getHeight()/2,
+                (int) this.getPosition().getX() - MapConfig.getPassAirportImg().getWidth()/2,
+                (int) this.getPosition().getY() - MapConfig.getPassAirportImg().getHeight()/2,
                 WorldController.getWorldController());
     }
 
@@ -40,5 +36,10 @@ public class PassengerAirport extends Airport {
     @Override
     void sendAircraft() {
 
+    }
+
+    @Override
+    BufferedImage getImage() {
+        return MapConfig.getPassAirportImg();
     }
 }

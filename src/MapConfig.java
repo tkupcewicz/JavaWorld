@@ -13,11 +13,13 @@ import java.util.Random;
 
 /*
 @TODO
-New samolot na jakims lotnisku
-Randomizowanie trasy
-Generowanie wartosci, pojemnosc, bak etc
-Poruszanie sie z ustalona predkoscia
-Po doleceniu - nowa trasa
+Paliwo i inne pierdoly w samolotach
+Inspector:
+-pokazywanie obiektu zaznaczonego
+-jego trasy
+-jego informacji
+-checkboxy do tras i skrzyzowan
+-Fix wylatujacych samolotow? Zmiana systemu podrozy?
 
 
 */
@@ -26,6 +28,10 @@ public final class MapConfig {
     private static BufferedImage passAirportImg;
     private static BufferedImage crossroadImg;
     private static BufferedImage passAircraftImg;
+    private static BufferedImage miliAirportImg;
+    private static BufferedImage miliAircraftImg;
+    private static BufferedImage aircraftCarrierImg;
+
     private static Random rn = new Random();
 
     private static int pathWidth = 4;
@@ -33,6 +39,7 @@ public final class MapConfig {
     private static int minAirPassengers = 5;
     private static int minRouteLength = 2;
     private static int maxRouteLength = 6;
+
     private static boolean crossroadVisible = false;
     private static boolean pathVisible = true;
 
@@ -40,7 +47,7 @@ public final class MapConfig {
     private static PassengerAirport[] passengerAirports = {
             new PassengerAirport(150, 100),
             new PassengerAirport(450, 150),
-            new PassengerAirport(300, 300),
+            new PassengerAirport(250, 380),
             new PassengerAirport(100, 450),
             new PassengerAirport(500, 400),
             new PassengerAirport(230, 660),
@@ -53,12 +60,6 @@ public final class MapConfig {
             new MilitaryAirport(400, 700),
     };
 
-    private static Crossroad[] crossroads = {
-            new Crossroad(265, 185),
-            new Crossroad(470, 280),
-            new Crossroad(290, 420),
-            new Crossroad(400, 530)
-    };
 
     static {
         try {
@@ -88,6 +89,34 @@ public final class MapConfig {
         }
     }
 
+    static {
+        try {
+            miliAircraftImg = ImageIO.read(new File("resources/miliPlane.png"));
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+    }
+    static {
+        try {
+            miliAirportImg = ImageIO.read(new File("resources/miliAirport.png"));
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+    }
+    static {
+        try {
+            aircraftCarrierImg = ImageIO.read(new File("resources/carrier.png"));
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+    }
+
 
 
     public static PassengerAirport[] getPassengerAirports() {
@@ -96,10 +125,6 @@ public final class MapConfig {
 
     public static MilitaryAirport[] getMilitaryAirports() {
         return militaryAirports;
-    }
-
-    public static Crossroad[] getCrossroads() {
-        return crossroads;
     }
 
     public static int getPathWidth() {
@@ -155,5 +180,17 @@ public final class MapConfig {
 
     public static BufferedImage getPassAircraftImg() {
         return passAircraftImg;
+    }
+
+    public static BufferedImage getMiliAirportImg() {
+        return miliAirportImg;
+    }
+
+    public static BufferedImage getMiliAircraftImg() {
+        return miliAircraftImg;
+    }
+
+    public static BufferedImage getAircraftCarrierImg() {
+        return aircraftCarrierImg;
     }
 }

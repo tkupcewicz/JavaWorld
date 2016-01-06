@@ -11,6 +11,11 @@ public class AircraftCarrier extends Ship {
 
     }
 
+    @Override
+    BufferedImage getImage() {
+        return MapConfig.getAircraftCarrierImg();
+    }
+
     void SpawnAircraft() {
 
     }
@@ -20,11 +25,5 @@ public class AircraftCarrier extends Ship {
     void moveTo() {
 
     }
-
-    @Override
-    void randomizeRoute() {
-
-    }
-
 
 }

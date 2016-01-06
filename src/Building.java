@@ -8,7 +8,7 @@ import java.util.List;
 public abstract class Building extends PhysicalObject {
     private LinkedList<Building> connections;
 
-    public List getConnections() {
+    public LinkedList<Building> getConnections() {
         return connections;
     }
     public Building getConnections(int i){
