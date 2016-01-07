@@ -19,7 +19,7 @@ Inspector:
 -jego trasy
 -jego informacji
 -checkboxy do tras i skrzyzowan
--Fix wylatujacych samolotow? Zmiana systemu podrozy?
+
 
 
 */

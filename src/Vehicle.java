@@ -1,6 +1,9 @@
+import com.sun.javafx.geom.Point2D;
+
 import java.util.LinkedList;
 
 import static java.lang.Math.atan2;
+import static java.lang.Math.pow;
 
 /**
  * Created by Tymek on 13.10.15.
@@ -42,10 +45,15 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
         this.route.remove(0);
         float xVel = 0;
         float yVel = 0;
+        float routeDistance = 0;
+        float distanceTravelled = 0;
         while(true) {
             if(!this.isMoving()){
                 Path temp = Path.calculatePath(this.getCurrentBuilding().getPosition(),
                         this.getNextDestination().getPosition(), 30);
+
+                routeDistance = Point2D.distance(temp.getOrigin().getX(), temp.getOrigin().getY(),
+                        temp.getDestination().getX(), temp.getDestination().getY());
 
                 //WorldController.getMainMap().addObjectToDraw(temp);
                 xVel = calculateXVel(temp.getDestination().getX(), temp.getDestination().getY(), temp.getOrigin().getX(), temp.getOrigin().getY());
@@ -56,17 +64,17 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
                 this.setMoving(true);
             }
             else{
+
                 float tmpx = this.getPosition().getX();
                 float tmpy = this.getPosition().getY();
                 tmpx = tmpx + xVel;
                 tmpy = tmpy + yVel;
                 this.setPosition(tmpx, tmpy);
+                System.out.println(distanceTravelled);
+                distanceTravelled = (float) (distanceTravelled + Math.sqrt(Math.pow(xVel, 2) + Math.pow(yVel, 2)));
 
-                if((Math.abs(this.getPosition().getX() -
-                        this.getNextDestination().getPosition().getX())) < this.getSpeed() &&
-                        (Math.abs(this.getPosition().getY() -
-                                this.getNextDestination().getPosition().getY())) < this.getSpeed()) {
-
+                if(distanceTravelled >= routeDistance){
+                    distanceTravelled = 0;
                     this.setMoving(false);
                     this.setPosition(this.nextDestination.getPosition());
                     this.setCurrentBuilding(this.getNextDestination());
