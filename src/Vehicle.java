@@ -3,7 +3,6 @@ import com.sun.javafx.geom.Point2D;
 import java.util.LinkedList;
 
 import static java.lang.Math.atan2;
-import static java.lang.Math.pow;
 
 /**
  * Created by Tymek on 13.10.15.
@@ -16,6 +15,7 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
     private Building currentBuilding;
     private LinkedList<Building> route;
     abstract void moveTo();
+    private float distanceTravelled;
     private boolean moving;
 
     float calculateXVel(float posX, float posY, float tarX, float tarY){
@@ -29,7 +29,7 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
         return yVel;
     }
 
-    void randomizeRoute(Building b){
+     public void randomizeRoute(Building b){
         Building tmp1 = b;
         for (int i = 0; i < MapConfig.randInt(MapConfig.getMinRouteLength(), MapConfig.getMaxRouteLength()); i++) {
             Building tmp2 = tmp1.getConnections().get(MapConfig.randInt(0, tmp1.getConnections().size() - 1));
@@ -39,23 +39,24 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
     }
 
     public void run() {
-        this.route = new LinkedList<>();
-        this.randomizeRoute(this.currentBuilding);
-        this.setNextDestination(route.get(0));
-        this.route.remove(0);
+        if(currentBuilding != null){
+            this.route = new LinkedList<>();
+            this.randomizeRoute(this.currentBuilding);
+            this.setNextDestination(route.get(0));
+            this.route.remove(0);
+        }
         float xVel = 0;
         float yVel = 0;
         float routeDistance = 0;
-        float distanceTravelled = 0;
+        distanceTravelled = 0;
         while(true) {
             if(!this.isMoving()){
-                Path temp = Path.calculatePath(this.getCurrentBuilding().getPosition(),
+                Path temp = Path.calculatePath(this.getPosition(),
                         this.getNextDestination().getPosition(), 30);
-
                 routeDistance = Point2D.distance(temp.getOrigin().getX(), temp.getOrigin().getY(),
                         temp.getDestination().getX(), temp.getDestination().getY());
-
                 //WorldController.getMainMap().addObjectToDraw(temp);
+
                 xVel = calculateXVel(temp.getDestination().getX(), temp.getDestination().getY(), temp.getOrigin().getX(), temp.getOrigin().getY());
                 yVel = calculateYVel(temp.getDestination().getX(), temp.getDestination().getY(), temp.getOrigin().getX(), temp.getOrigin().getY());
 
@@ -64,14 +65,12 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
                 this.setMoving(true);
             }
             else{
-
                 float tmpx = this.getPosition().getX();
                 float tmpy = this.getPosition().getY();
-                tmpx = tmpx + xVel;
-                tmpy = tmpy + yVel;
+                tmpx = tmpx + xVel * MapConfig.getVehiclesSpeed();
+                tmpy = tmpy + yVel * MapConfig.getVehiclesSpeed();
                 this.setPosition(tmpx, tmpy);
-                System.out.println(distanceTravelled);
-                distanceTravelled = (float) (distanceTravelled + Math.sqrt(Math.pow(xVel, 2) + Math.pow(yVel, 2)));
+                distanceTravelled = (float) (distanceTravelled + Math.sqrt(Math.pow(xVel * MapConfig.getVehiclesSpeed(), 2) + Math.pow(yVel * MapConfig.getVehiclesSpeed(), 2)));
 
                 if(distanceTravelled >= routeDistance){
                     distanceTravelled = 0;
@@ -142,11 +141,27 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
     public void arrive(){
 
     }
+
     public void depart(){
 
     }
 
+    public abstract void flyToNearest();
+
     public void setUniqueId(String uniqueId) {
         this.uniqueId = uniqueId;
+    }
+
+    public void inspect(){
+        WorldController.getVehicleInspector().setSelectedVehicle(this);
+        WorldController.getVehicleInspector().getFrame().setVisible(true);
+    }
+
+    public void setDistanceTravelled(float distanceTravelled) {
+        this.distanceTravelled = distanceTravelled;
+    }
+
+    public void setRoute(LinkedList<Building> route) {
+        this.route = route;
     }
 }

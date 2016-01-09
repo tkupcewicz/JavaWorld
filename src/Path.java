@@ -66,4 +66,9 @@ public class Path extends PhysicalObject{
     BufferedImage getImage() {
         return null;
     }
+
+    @Override
+    void inspect() {
+
+    }
 }

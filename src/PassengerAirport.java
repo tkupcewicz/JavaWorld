@@ -14,20 +14,6 @@ public class PassengerAirport extends Airport {
         img = MapConfig.getPassAirportImg();
     }
 
-    public PassengerAirport() {
-        img = MapConfig.getPassAirportImg();
-    }
-
-    @Override
-    void drawImage(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(
-                MapConfig.getPassAirportImg(),
-                (int) this.getPosition().getX() - MapConfig.getPassAirportImg().getWidth()/2,
-                (int) this.getPosition().getY() - MapConfig.getPassAirportImg().getHeight()/2,
-                WorldController.getWorldController());
-    }
-
     @Override
     void receiveAircraft() {
 

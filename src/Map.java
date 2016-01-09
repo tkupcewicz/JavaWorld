@@ -4,30 +4,46 @@ import java.util.LinkedList;
 /**
  * Created by Tymek on 28.12.2015.
  */
-public class Map {
+public final class Map {
 
-    private LinkedList<Path> pathsList;
+    private LinkedList<Path> airPathList;
+    private LinkedList<Path> seaPathList;
     private LinkedList<Crossroad> crossroadsList;
     private static LinkedList<PhysicalObject> objectsToDraw;
     private LinkedList<Building> airportList;
+    private LinkedList<Building> harborList;
 
     public Map(){
 
+        harborList = new LinkedList<>();
         airportList = new LinkedList<>();
         objectsToDraw = new LinkedList<>();
 
+        loadHarbors();
         loadPassAirports();
         loadMiliAirports();
 
-        pathsList = new LinkedList<>();
-        createConnections(MapConfig.getPassengerAirports(), airportList);
-        createConnections(MapConfig.getMilitaryAirports(), airportList);
+
+
+        airPathList = new LinkedList<>();
+        seaPathList = new LinkedList<>();
+        createConnections(MapConfig.getHarbors(), harborList, seaPathList);
+        createConnections(MapConfig.getPassengerAirports(), airportList, airPathList);
+        createConnections(MapConfig.getMilitaryAirports(), airportList, airPathList);
+
 
         crossroadsList = new LinkedList<>();
-        calculateCrossroads(pathsList);
+        calculateCrossroads(airPathList);
+        calculateCrossroads(seaPathList);
+
+        for (int i = 0; i < crossroadsList.size(); i++) {
+            System.out.println(crossroadsList.get(i).getPosition().toString());
+        }
+
+
     }
 
-    public void createConnections(Building a[], LinkedList<Building> l){
+    public void createConnections(Building a[], LinkedList<Building> l, LinkedList<Path> pathlist){
         for (int i = 0; i < a.length-1; i++) {
             for (int j = 0; j < MapConfig.randInt(3,3); j++) {
                 int x = MapConfig.randInt(i+1, l.size()-1);
@@ -36,8 +52,8 @@ public class Map {
                     l.get(x).addConnection(a[i]);
                     Path one = new Path(a[i].getPosition(), l.get(x).getPosition());
                     Path two = new Path(l.get(x).getPosition(), a[i].getPosition());
-                    pathsList.add(one);
-                    pathsList.add(two);
+                    pathlist.add(one);
+                    pathlist.add(two);
                     this.addObjectToDraw(one);
                     this.addObjectToDraw(two);
                 }
@@ -66,9 +82,11 @@ public class Map {
                         float d = (x1-x2)*(y3-y4) - (y1-y2)*(x3-x4);
                         float xi = ((x3-x4)*(x1*y2-y1*x2)-(x1-x2)*(x3*y4-y3*x4))/d;
                         float yi = ((y3-y4)*(x1*y2-y1*x2)-(y1-y2)*(x3*y4-y3*x4))/d;
+
                         Crossroad temp = new Crossroad(xi, yi);
                         crossroadsList.add(temp);
                         this.addObjectToDraw(temp);
+
                     }
                 }
             }
@@ -82,7 +100,7 @@ public class Map {
     }
 
     public void addObjectToDraw(PhysicalObject obj) {
-        this.objectsToDraw.add(obj);
+        objectsToDraw.add(obj);
     }
 
     public void loadPassAirports(){
@@ -98,12 +116,20 @@ public class Map {
             this.addAirport(MapConfig.getMilitaryAirports()[i]);
         }
     }
+    public void loadHarbors(){
+        for (int i = 0; i < MapConfig.getHarbors().length; i++) {
+            this.addObjectToDraw(MapConfig.getHarbors()[i]);
+            this.addHarbor(MapConfig.getHarbors()[i]);
+        }
+    }
 
     public LinkedList<PhysicalObject> getObjectsToDraw() {
         return objectsToDraw;
     }
 
     public void addAirport(Airport a){this.airportList.add(a);}
+
+    public void addHarbor(Harbor h){this.harborList.add(h);}
 
     public LinkedList<Building> getAirportList() {
         return airportList;
