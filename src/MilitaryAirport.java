@@ -13,19 +13,6 @@ public class MilitaryAirport extends Airport {
         this.setConnections(new LinkedList());
     }
 
-    public MilitaryAirport() {
-    }
-
-    @Override
-    void drawImage(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(
-                MapConfig.getMiliAirportImg(),
-                (int) this.getPosition().getX() - MapConfig.getMiliAirportImg().getWidth()/2,
-                (int) this.getPosition().getY() - MapConfig.getMiliAirportImg().getHeight()/2,
-                WorldController.getWorldController());
-    }
-
     @Override
     void receiveAircraft() {
 

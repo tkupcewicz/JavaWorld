@@ -4,14 +4,11 @@ import java.awt.image.BufferedImage;
 /**
  * Created by Tymek on 30.12.2015.
  */
-public class Crossroad extends Building {
+public class Crossroad extends PhysicalObject {
 
     public Crossroad(float posX, float posY) {
         this.setPosition(posX,posY);
         img = MapConfig.getCrossroadImg();
-    }
-
-    public Crossroad() {
     }
 
     @Override
@@ -28,6 +25,11 @@ public class Crossroad extends Building {
     @Override
     BufferedImage getImage() {
         return MapConfig.getCrossroadImg();
+    }
+
+    @Override
+    void inspect() {
+
     }
 
 }

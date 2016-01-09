@@ -7,7 +7,6 @@ import java.util.List;
  */
 public abstract class Building extends PhysicalObject {
     private LinkedList<Building> connections;
-
     public LinkedList<Building> getConnections() {
         return connections;
     }
@@ -19,4 +18,9 @@ public abstract class Building extends PhysicalObject {
         this.connections = connections;
     }
     public void addConnection(Building b) {this.connections.add(b);}
+
+
+    public void inspect(){
+
+    }
 }

@@ -9,7 +9,13 @@ public abstract class PhysicalObject {
 
     protected BufferedImage img;
     private Position position;
-    abstract void drawImage(Graphics g);
+    void drawImage(Graphics g) {
+        g.drawImage(
+                getImage(),
+                (int) this.getPosition().getX() - getImage().getWidth()/2,
+                (int) this.getPosition().getY() - getImage().getHeight()/2,
+                WorldController.getWorldController());
+    }
     public Position getPosition() {
         return position;
     }
@@ -23,4 +29,6 @@ public abstract class PhysicalObject {
     }
 
     abstract BufferedImage getImage();
+
+    abstract void inspect();
 }
