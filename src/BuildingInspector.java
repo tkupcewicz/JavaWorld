@@ -10,17 +10,18 @@ public class BuildingInspector {
     private JLabel yLabel;
     private JPanel jpanel;
     private JLabel vehicleTypeLabel;
-    private JFrame frame;
+    private final JFrame frame;
     private Building selectedBuilding;
 
     public BuildingInspector() {
         frame = new JFrame("Vehicle Inspector");
-        frame.setContentPane(this.jpanel);
+        frame.setContentPane(jpanel);
         frame.setLocation(0, WorldController.getControlPanel().getFrame().getHeight());
         frame.pack();
         infiniteLoop();
     }
-    public void infiniteLoop() {
+
+    private void infiniteLoop() {
         Runnable r = () -> {
             while (true) {
                 if (selectedBuilding != null) {

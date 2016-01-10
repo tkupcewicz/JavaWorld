@@ -1,24 +1,23 @@
 /**
  * Created by Tymek on 13.10.15.
  */
+
 import java.awt.image.BufferedImage;
-import java.util.UUID;
 
 public class AircraftCarrier extends Ship {
-    private Weapon weaponType;
+    private final Weapon weaponType;
 
     public AircraftCarrier() {
-        super();
         WorldController.getMainMap().addObjectToDraw(this);
-        this.setCurrentBuilding(MapConfig.getHarbors()[MapConfig.randInt(0,
+        setCurrentBuilding(MapConfig.getHarbors()[MapConfig.randInt(0,
                 MapConfig.getHarbors().length - 1)]);
-        this.setPosition(this.getCurrentBuilding().getPosition().getX(), this.getCurrentBuilding().getPosition().getY());
-        this.setSpeed(MapConfig.randInt(MapConfig.getMinVehicleSpeed(), MapConfig.getMaxVehicleSpeed()));
-        this.weaponType = Weapon.getRandom();
+        setPosition(getCurrentBuilding().getPosition().getX(), getCurrentBuilding().getPosition().getY());
+        setSpeed(MapConfig.randInt(MapConfig.getMinVehicleSpeed(), MapConfig.getMaxVehicleSpeed()));
+        weaponType = Weapon.getRandom();
     }
 
     @Override
-    public void inspect(){
+    public void inspect() {
         super.inspect();
         WorldController.getVehicleInspector().getSpawnPlaneButton().setVisible(true);
         WorldController.getVehicleInspector().getPassengerPane().setVisible(false);

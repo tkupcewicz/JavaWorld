@@ -5,7 +5,7 @@ public enum Weapon {
     Weapon1, Weapon2, Weapon3, Weapon4, Weapon5;
 
     public static Weapon getRandom() {
-        return values()[(int) (Math.random() * values().length)];
+        return Weapon.values()[(int) (Math.random() * Weapon.values().length)];
     }
 
 

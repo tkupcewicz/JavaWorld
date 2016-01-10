@@ -1,21 +1,20 @@
 /**
  * Created by Tymek on 13.10.15.
  */
+
 import java.awt.image.BufferedImage;
-import java.util.UUID;
 
 public class PassengerShip extends Ship {
-    private PassengerInfo passengerInfo ;
-    private String companyName;
+    private PassengerInfo passengerInfo;
+    private final String companyName;
 
     public PassengerShip() {
-        super();
-        this.companyName = "White Star Line";
+        companyName = "White Star Line";
         WorldController.getMainMap().addObjectToDraw(this);
-        this.setCurrentBuilding(MapConfig.getHarbors()[MapConfig.randInt(0,
+        setCurrentBuilding(MapConfig.getHarbors()[MapConfig.randInt(0,
                 MapConfig.getHarbors().length - 1)]);
-        this.setPosition(this.getCurrentBuilding().getPosition().getX(), this.getCurrentBuilding().getPosition().getY());
-        this.setSpeed(MapConfig.randInt(MapConfig.getMinVehicleSpeed(), MapConfig.getMaxVehicleSpeed()));
+        setPosition(getCurrentBuilding().getPosition().getX(), getCurrentBuilding().getPosition().getY());
+        setSpeed(MapConfig.randInt(MapConfig.getMinVehicleSpeed(), MapConfig.getMaxVehicleSpeed()));
     }
 
 
@@ -37,6 +36,6 @@ public class PassengerShip extends Ship {
         WorldController.getVehicleInspector().getPassengersLabel().setVisible(true);
         WorldController.getVehicleInspector().getCompanyNameLabel().setVisible(true);
         WorldController.getVehicleInspector().getCompanyValueLabel().setVisible(true);
-        WorldController.getVehicleInspector().getCompanyValueLabel().setText(this.companyName);
+        WorldController.getVehicleInspector().getCompanyValueLabel().setText(companyName);
     }
 }

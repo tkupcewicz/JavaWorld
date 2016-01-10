@@ -5,7 +5,7 @@ public class Position {
     private float x;
     private float y;
 
-    public Position(){
+    public Position() {
 
     }
 
@@ -32,6 +32,6 @@ public class Position {
 
     @Override
     public String toString() {
-        return "X: " + this.x + " Y: " + this.y + " ";
+        return "X: " + x + " Y: " + y + " ";
     }
 }

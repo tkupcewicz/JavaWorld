@@ -2,15 +2,14 @@
  * Created by Tymek on 15.10.15.
  */
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
 public class Harbor extends Building {
 
     public Harbor(int posX, int posY) {
-        this.setPosition(posX,posY);
-        this.setConnections(new LinkedList());
+        setPosition(posX, posY);
+        setConnections(new LinkedList());
         img = MapConfig.getHarborImg();
     }
 
@@ -19,7 +18,8 @@ public class Harbor extends Building {
         return MapConfig.getHarborImg();
     }
 
-    public void inspect(){
+    @Override
+    public void inspect() {
         super.inspect();
         WorldController.getBuildingInspector().setVehicleTypeLabel("Ships: ");
     }

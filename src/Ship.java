@@ -1,11 +1,12 @@
 /**
  * Created by Tymek on 13.10.15.
  */
-public abstract class Ship extends Vehicle{
-    public Ship() {
-        super();
+abstract class Ship extends Vehicle {
+    Ship() {
     }
-    public void inspect(){
+
+    @Override
+    void inspect() {
         super.inspect();
         WorldController.getVehicleInspector().getEmergencyLandingButton().setVisible(false);
     }

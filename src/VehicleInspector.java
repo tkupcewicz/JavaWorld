@@ -21,8 +21,22 @@ public class VehicleInspector {
     private JProgressBar fuelBar;
     private JLabel companyNameLabel;
     private JLabel companyValueLabel;
-    private JFrame frame;
+    private final JFrame frame;
     private Vehicle selectedVehicle;
+
+    public VehicleInspector() {
+        frame = new JFrame("Vehicle Inspector");
+        frame.setContentPane(jpanel);
+        frame.setLocation(0, WorldController.getControlPanel().getFrame().getHeight());
+        frame.pack();
+        infiniteLoop();
+
+        emergencyLandingButton.addActionListener(e -> selectedVehicle.flyToNearest());
+        spawnPlaneButton.addActionListener(e -> spawnMilitaryPlane());
+        delRouteButton.setEnabled(false);
+        addRouteButton.setEnabled(false);
+
+    }
 
     public Vehicle getSelectedVehicle() {
         return selectedVehicle;
@@ -32,33 +46,14 @@ public class VehicleInspector {
         this.selectedVehicle = selectedVehicle;
     }
 
-    public VehicleInspector(){
-        frame = new JFrame("Vehicle Inspector");
-        frame.setContentPane(this.jpanel);
-        frame.setLocation(0, WorldController.getControlPanel().getFrame().getHeight());
-        frame.pack();
-        infiniteLoop();
-
-        emergencyLandingButton.addActionListener(e -> {
-            selectedVehicle.flyToNearest();
-
-        });
-        spawnPlaneButton.addActionListener(e -> {
-            this.spawnMilitaryPlane();
-        });
-        delRouteButton.setEnabled(false);
-        addRouteButton.setEnabled(false);
-
-    }
-
     public JFrame getFrame() {
         return frame;
     }
 
-    public void infiniteLoop() {
+    private void infiniteLoop() {
         Runnable r = () -> {
             while (true) {
-                if(selectedVehicle != null){
+                if (selectedVehicle != null) {
                     fuelBar.setMaximum((int) selectedVehicle.getMaxFuel());
                     nextDestinationLabel.setText(String.valueOf(selectedVehicle.getNextDestination()));
                     xLabel.setText(String.valueOf(selectedVehicle.getPosition().getX()));
@@ -86,7 +81,7 @@ public class VehicleInspector {
         return spawnPlaneButton;
     }
 
-    public void spawnMilitaryPlane(){
+    private void spawnMilitaryPlane() {
         Runnable r = new MilitaryAircraft(selectedVehicle.getPosition());
         Thread t = new Thread(r);
         t.start();
@@ -105,7 +100,7 @@ public class VehicleInspector {
         return passengersLabel;
     }
 
-    public void delRoute(Building b){
+    public void delRoute(Building b) {
         int x = selectedVehicle.getRoute().indexOf(b);
         selectedVehicle.getRoute().subList(x, selectedVehicle.getRoute().size()).clear();
     }
