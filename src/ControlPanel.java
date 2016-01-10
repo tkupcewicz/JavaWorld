@@ -13,7 +13,7 @@ public class ControlPanel {
     private JSlider vehiclesSpeedSlider;
     private JButton spawnPassengerShipButton;
     private JButton spawnAircraftCarrierButton;
-    private JFrame frame;
+    private final JFrame frame;
 
     public ControlPanel() {
 
@@ -22,7 +22,7 @@ public class ControlPanel {
         crossroadBox.setSelected(MapConfig.isCrossroadVisible());
         pathBox.setSelected(MapConfig.isPathVisible());
 
-        frame.setContentPane(this.panel1);
+        frame.setContentPane(panel1);
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setMinimumSize(new Dimension(100, 100));
@@ -44,37 +44,31 @@ public class ControlPanel {
                 MapConfig.setPathVisible(false);
             }
         });
-        button1.addActionListener(e -> {
-            this.spawnPlane();
-        });
-        spawnPassengerShipButton.addActionListener(e -> {
-            this.spawnPassShip();
-        });
-        spawnAircraftCarrierButton.addActionListener(e -> {
-            this.spawnCarrier();
-        });
+        button1.addActionListener(e -> spawnPlane());
+        spawnPassengerShipButton.addActionListener(e -> spawnPassShip());
+        spawnAircraftCarrierButton.addActionListener(e -> spawnCarrier());
         Hashtable labelTable = new Hashtable();
-        labelTable.put( new Integer( 10 ), new JLabel("10%") );
-        labelTable.put( new Integer( 100 ), new JLabel("100%") );
-        labelTable.put( new Integer( 300 ), new JLabel("300%") );
-        vehiclesSpeedSlider.setLabelTable( labelTable );
+        labelTable.put(10, new JLabel("10%"));
+        labelTable.put(100, new JLabel("100%"));
+        labelTable.put(300, new JLabel("300%"));
+        vehiclesSpeedSlider.setLabelTable(labelTable);
 
 
     }
 
-    public void spawnPlane() {
+    private void spawnPlane() {
         Runnable r = new PassengerAircraft();
         Thread t = new Thread(r);
         t.start();
     }
 
-    public void spawnPassShip() {
+    private void spawnPassShip() {
         Runnable r = new PassengerShip();
         Thread t = new Thread(r);
         t.start();
     }
 
-    public void spawnCarrier() {
+    private void spawnCarrier() {
         Runnable r = new AircraftCarrier();
         Thread t = new Thread(r);
         t.start();

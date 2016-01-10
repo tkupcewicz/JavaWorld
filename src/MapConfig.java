@@ -8,7 +8,7 @@ import java.util.Random;
  * Created by Tymek on 30.12.2015.
  */
 
-public final class MapConfig {
+final class MapConfig {
 
     private static BufferedImage passAirportImg;
     private static BufferedImage crossroadImg;
@@ -22,22 +22,21 @@ public final class MapConfig {
     private static Random rn = new Random();
 
     private static float vehiclesSpeed = 1;
-    private static int pathWidth = 4;
-    private static int maxAirPassengers = 20;
-    private static int minAirPassengers = 5;
-    private static int minRouteLength = 2;
-    private static int maxRouteLength = 6;
-    private static int minAirportCapacity = 3;
-    private static int maxAirportCapacity = 8;
-    private static int minVehicleSpeed = 2;
-    private static int maxVehicleSpeed = 4;
+    private static final int pathWidth = 4;
+    private static final int maxAirPassengers = 20;
+    private static final int minAirPassengers = 5;
+    private static final int minRouteLength = 2;
+    private static final int maxRouteLength = 6;
+    private static final int minAirportCapacity = 3;
+    private static final int maxAirportCapacity = 8;
+    private static final int minVehicleSpeed = 2;
+    private static final int maxVehicleSpeed = 4;
 
-
-    private static boolean crossroadVisible = true;
+    private static boolean crossroadVisible;
     private static boolean pathVisible = true;
 
 
-    private static PassengerAirport[] passengerAirports = {
+    private static final PassengerAirport[] passengerAirports = {
             new PassengerAirport(150, 100),
             new PassengerAirport(450, 150),
             new PassengerAirport(250, 380),
@@ -47,13 +46,13 @@ public final class MapConfig {
             new PassengerAirport(480, 590)
     };
 
-    private static MilitaryAirport[] militaryAirports = {
+    private static final MilitaryAirport[] militaryAirports = {
             new MilitaryAirport(50, 200),
             new MilitaryAirport(550, 300),
             new MilitaryAirport(400, 700),
     };
 
-    private static Harbor[] harbors = {
+    private static final Harbor[] harbors = {
             new Harbor(800, 50),
             new Harbor(680, 75),
             new Harbor(960, 230),
@@ -72,6 +71,7 @@ public final class MapConfig {
             e.printStackTrace();
         }
     }
+
     static {
         try {
             harborImg = ImageIO.read(new File("resources/port.png"));
@@ -81,6 +81,7 @@ public final class MapConfig {
             e.printStackTrace();
         }
     }
+
     static {
         try {
             crossroadImg = ImageIO.read(new File("resources/circle.png"));
@@ -90,6 +91,7 @@ public final class MapConfig {
             e.printStackTrace();
         }
     }
+
     static {
         try {
             passAircraftImg = ImageIO.read(new File("resources/passPlane.png"));
@@ -109,6 +111,7 @@ public final class MapConfig {
             e.printStackTrace();
         }
     }
+
     static {
         try {
             miliAirportImg = ImageIO.read(new File("resources/miliAirport.png"));
@@ -118,6 +121,7 @@ public final class MapConfig {
             e.printStackTrace();
         }
     }
+
     static {
         try {
             aircraftCarrierImg = ImageIO.read(new File("resources/carrier.png"));
@@ -127,6 +131,7 @@ public final class MapConfig {
             e.printStackTrace();
         }
     }
+
     static {
         try {
             passengerShipImg = ImageIO.read(new File("resources/passShip.png"));
@@ -136,7 +141,6 @@ public final class MapConfig {
             e.printStackTrace();
         }
     }
-
 
 
     public static PassengerAirport[] getPassengerAirports() {
@@ -173,9 +177,7 @@ public final class MapConfig {
 
     public static int randInt(int min, int max) {
 
-        int randomNum = rn.nextInt((max - min) + 1) + min;
-
-        return randomNum;
+        return rn.nextInt(max - min + 1) + min;
     }
 
     public static int getMinRouteLength() {
@@ -194,8 +196,16 @@ public final class MapConfig {
         return crossroadVisible;
     }
 
+    public static void setCrossroadVisible(boolean crossroadVisible) {
+        MapConfig.crossroadVisible = crossroadVisible;
+    }
+
     public static boolean isPathVisible() {
         return pathVisible;
+    }
+
+    public static void setPathVisible(boolean pathVisible) {
+        MapConfig.pathVisible = pathVisible;
     }
 
     public static BufferedImage getPassAircraftImg() {
@@ -212,14 +222,6 @@ public final class MapConfig {
 
     public static BufferedImage getAircraftCarrierImg() {
         return aircraftCarrierImg;
-    }
-
-    public static void setCrossroadVisible(boolean crossroadVisible) {
-        MapConfig.crossroadVisible = crossroadVisible;
-    }
-
-    public static void setPathVisible(boolean pathVisible) {
-        MapConfig.pathVisible = pathVisible;
     }
 
     public static int getMinAirportCapacity() {

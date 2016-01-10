@@ -3,19 +3,16 @@
  */
 
 import java.awt.image.BufferedImage;
-import java.util.UUID;
 
 public class PassengerAircraft extends Aircraft {
-    private PassengerInfo passengerInfo;
 
     public PassengerAircraft() {
-        super();
         WorldController.getMainMap().addObjectToDraw(this);
-        this.setCurrentBuilding(MapConfig.getPassengerAirports()[MapConfig.randInt(0,
+        setCurrentBuilding(MapConfig.getPassengerAirports()[MapConfig.randInt(0,
                 MapConfig.getPassengerAirports().length - 1)]);
-        this.setPosition(this.getCurrentBuilding().getPosition().getX(), this.getCurrentBuilding().getPosition().getY());
-        this.passengerInfo = new PassengerInfo();
-        this.setSpeed(MapConfig.randInt(MapConfig.getMinVehicleSpeed(), MapConfig.getMaxVehicleSpeed()));
+        setPosition(getCurrentBuilding().getPosition().getX(), getCurrentBuilding().getPosition().getY());
+        PassengerInfo passengerInfo = new PassengerInfo();
+        setSpeed(MapConfig.randInt(MapConfig.getMinVehicleSpeed(), MapConfig.getMaxVehicleSpeed()));
         System.out.println("Plane spawned");
     }
 
@@ -24,25 +21,14 @@ public class PassengerAircraft extends Aircraft {
         return MapConfig.getPassAircraftImg();
     }
 
-    void getPassengers() {
-
-    }
-
-    void leavePassengers() {
-
-    }
-
+    @Override
     public void refuel() {
 
     }
 
-    void leaveAirport() {
-
-    }
-
     @Override
-    public void arrive(){
-        this.refuel();
+    public void arrive() {
+        refuel();
     }
 
     @Override
