@@ -24,6 +24,9 @@ public class PassengerShip extends Ship {
         this.setSpeed(MapConfig.randInt(MapConfig.getMinVehicleSpeed(), MapConfig.getMaxVehicleSpeed()));
         this.setMaxPassengerCount(MapConfig.randInt(MapConfig.getMinPassengerCount(),
                 MapConfig.getMaxPassengerCount()));
+        for (int i = 0; i < this.getMaxPassengerCount(); i++) {
+            WorldController.getMainMap().spawnPassenger();
+        }
     }
 
     /**

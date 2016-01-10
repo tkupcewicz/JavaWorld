@@ -123,10 +123,6 @@ public class WorldController extends JPanel implements Serializable {
         vehicleInspector = new VehicleInspector();
         buildingInspector = new BuildingInspector();
         worldController = new WorldController();
-
-        for (int i = 0; i < 500; i++) {
-            mainMap.spawnPassenger();
-        }
     }
 
     /**

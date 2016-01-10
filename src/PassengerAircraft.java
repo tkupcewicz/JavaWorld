@@ -21,6 +21,9 @@ public class PassengerAircraft extends Aircraft {
         System.out.println("Plane spawned");
         this.setMaxPassengerCount(MapConfig.randInt(MapConfig.getMinPassengerCount(),
                 MapConfig.getMaxPassengerCount()));
+        for (int i = 0; i < this.getMaxPassengerCount(); i++) {
+            WorldController.getMainMap().spawnPassenger();
+        }
     }
 
     /**
