@@ -9,7 +9,7 @@ public abstract class Aircraft extends Vehicle {
 
 
     Aircraft() {
-        stuffCount = 10;
+        this.stuffCount = 10;
     }
 
     @Override
@@ -18,19 +18,19 @@ public abstract class Aircraft extends Vehicle {
         float min = Float.MAX_VALUE;
         Building nearest = null;
         for (int i = 0; i < WorldController.getMainMap().getAirportList().size(); i++) {
-            distance = (float) Point2D.distance(getPosition().getX(),
-                    getPosition().getY(),
+            distance = (float) Point2D.distance(this.getPosition().getX(),
+                    this.getPosition().getY(),
                     WorldController.getMainMap().getAirportList().get(i).getPosition().getX(),
                     WorldController.getMainMap().getAirportList().get(i).getPosition().getY());
             if (distance < min) {
                 min = distance;
                 nearest = WorldController.getMainMap().getAirportList().get(i);
             }
-            setDistanceTravelled();
-            setNextDestination(nearest);
-            getRoute().clear();
-            getRoute().add(0, nearest);
-            setMoving(false);
+            this.setDistanceTravelled();
+            this.setNextDestination(nearest);
+            this.getRoute().clear();
+            this.getRoute().add(0, nearest);
+            this.setMoving(false);
         }
     }
 
@@ -44,11 +44,15 @@ public abstract class Aircraft extends Vehicle {
     }
 
     public int getStuffCount() {
-        return stuffCount;
+        return this.stuffCount;
     }
 
     public void setStuffCount(int stuffCount) {
         this.stuffCount = stuffCount;
+    }
+
+    public Building getRandomConnected(){
+        return MapConfig.getPassengerAirports()[MapConfig.randInt(0, MapConfig.getPassengerAirports().length - 1)];
     }
 
 }

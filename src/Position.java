@@ -15,7 +15,7 @@ public class Position {
     }
 
     public float getX() {
-        return x;
+        return this.x;
     }
 
     public void setX(int x) {
@@ -23,7 +23,7 @@ public class Position {
     }
 
     public float getY() {
-        return y;
+        return this.y;
     }
 
     public void setY(int y) {
@@ -32,6 +32,6 @@ public class Position {
 
     @Override
     public String toString() {
-        return "X: " + x + " Y: " + y + " ";
+        return "X: " + this.x + " Y: " + this.y + " ";
     }
 }

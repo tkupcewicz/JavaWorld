@@ -8,11 +8,11 @@ public class PassengerAircraft extends Aircraft {
 
     public PassengerAircraft() {
         WorldController.getMainMap().addObjectToDraw(this);
-        setCurrentBuilding(MapConfig.getPassengerAirports()[MapConfig.randInt(0,
+        this.setCurrentBuilding(MapConfig.getPassengerAirports()[MapConfig.randInt(0,
                 MapConfig.getPassengerAirports().length - 1)]);
-        setPosition(getCurrentBuilding().getPosition().getX(), getCurrentBuilding().getPosition().getY());
+        this.setPosition(this.getCurrentBuilding().getPosition().getX(), this.getCurrentBuilding().getPosition().getY());
         PassengerInfo passengerInfo = new PassengerInfo();
-        setSpeed(MapConfig.randInt(MapConfig.getMinVehicleSpeed(), MapConfig.getMaxVehicleSpeed()));
+        this.setSpeed(MapConfig.randInt(MapConfig.getMinVehicleSpeed(), MapConfig.getMaxVehicleSpeed()));
         System.out.println("Plane spawned");
     }
 
@@ -28,7 +28,7 @@ public class PassengerAircraft extends Aircraft {
 
     @Override
     public void arrive() {
-        refuel();
+        this.refuel();
     }
 
     @Override

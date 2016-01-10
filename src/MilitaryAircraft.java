@@ -9,14 +9,14 @@ import java.util.UUID;
 class MilitaryAircraft extends Aircraft {
 
     public MilitaryAircraft(Position position) {
-        setRoute(new LinkedList<>());
+        this.setRoute(new LinkedList<>());
         WorldController.getMainMap().addObjectToDraw(this);
-        setPosition(position);
-        setUniqueId(UUID.randomUUID().toString());
+        this.setPosition(position);
+        this.setUniqueId(UUID.randomUUID().toString());
         Weapon weaponType = Weapon.getRandom();
-        setSpeed(MapConfig.randInt(MapConfig.getMinVehicleSpeed(), MapConfig.getMaxVehicleSpeed()));
-        flyToNearest();
-        weaponType = Weapon.getRandom();
+        this.setSpeed(MapConfig.randInt(MapConfig.getMinVehicleSpeed(), MapConfig.getMaxVehicleSpeed()));
+        this.flyToNearest();
+
     }
 
     @Override

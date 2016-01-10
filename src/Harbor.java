@@ -8,9 +8,9 @@ import java.util.LinkedList;
 public class Harbor extends Building {
 
     public Harbor(int posX, int posY) {
-        setPosition(posX, posY);
-        setConnections(new LinkedList());
-        img = MapConfig.getHarborImg();
+        this.setPosition(posX, posY);
+        this.setConnections(new LinkedList());
+        this.img = MapConfig.getHarborImg();
     }
 
     @Override
@@ -22,5 +22,14 @@ public class Harbor extends Building {
     public void inspect() {
         super.inspect();
         WorldController.getBuildingInspector().setVehicleTypeLabel("Ships: ");
+    }
+
+    @Override
+    public Building getRandomConnected(){
+        Building dest = this;
+        while(dest.equals(this)){
+            dest = MapConfig.getHarbors()[MapConfig.randInt(0, MapConfig.getHarbors().length - 1)];
+        }
+        return dest;
     }
 }

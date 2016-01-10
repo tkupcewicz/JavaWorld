@@ -7,8 +7,8 @@ import java.awt.image.BufferedImage;
 class Crossroad extends PhysicalObject {
 
     public Crossroad(float posX, float posY) {
-        setPosition(posX, posY);
-        img = MapConfig.getCrossroadImg();
+        this.setPosition(posX, posY);
+        this.img = MapConfig.getCrossroadImg();
     }
 
     @Override
@@ -16,8 +16,8 @@ class Crossroad extends PhysicalObject {
         if (MapConfig.isCrossroadVisible()) {
             g.drawImage(
                     MapConfig.getCrossroadImg(),
-                    (int) getPosition().getX() - MapConfig.getCrossroadImg().getWidth() / 2,
-                    (int) getPosition().getY() - MapConfig.getCrossroadImg().getHeight() / 2,
+                    (int) this.getPosition().getX() - MapConfig.getCrossroadImg().getWidth() / 2,
+                    (int) this.getPosition().getY() - MapConfig.getCrossroadImg().getHeight() / 2,
                     WorldController.getWorldController());
         }
     }

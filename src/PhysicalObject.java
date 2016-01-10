@@ -13,22 +13,22 @@ abstract class PhysicalObject {
 
     void drawImage(Graphics g) {
         g.drawImage(
-                getImage(),
-                (int) getPosition().getX() - getImage().getWidth() / 2,
-                (int) getPosition().getY() - getImage().getHeight() / 2,
+                this.getImage(),
+                (int) this.getPosition().getX() - this.getImage().getWidth() / 2,
+                (int) this.getPosition().getY() - this.getImage().getHeight() / 2,
                 WorldController.getWorldController());
     }
 
     public Position getPosition() {
-        return position;
+        return this.position;
     }
 
     void setPosition(Position pos) {
-        position = new Position(pos.getX(), pos.getY());
+        this.position = new Position(pos.getX(), pos.getY());
     }
 
     void setPosition(float posX, float posY) {
-        position = new Position(posX, posY);
+        this.position = new Position(posX, posY);
     }
 
     abstract BufferedImage getImage();

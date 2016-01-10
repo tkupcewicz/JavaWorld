@@ -9,11 +9,11 @@ public class AircraftCarrier extends Ship {
 
     public AircraftCarrier() {
         WorldController.getMainMap().addObjectToDraw(this);
-        setCurrentBuilding(MapConfig.getHarbors()[MapConfig.randInt(0,
+        this.setCurrentBuilding(MapConfig.getHarbors()[MapConfig.randInt(0,
                 MapConfig.getHarbors().length - 1)]);
-        setPosition(getCurrentBuilding().getPosition().getX(), getCurrentBuilding().getPosition().getY());
-        setSpeed(MapConfig.randInt(MapConfig.getMinVehicleSpeed(), MapConfig.getMaxVehicleSpeed()));
-        weaponType = Weapon.getRandom();
+        this.setPosition(this.getCurrentBuilding().getPosition().getX(), this.getCurrentBuilding().getPosition().getY());
+        this.setSpeed(MapConfig.randInt(MapConfig.getMinVehicleSpeed(), MapConfig.getMaxVehicleSpeed()));
+        this.weaponType = Weapon.getRandom();
     }
 
     @Override
@@ -37,6 +37,6 @@ public class AircraftCarrier extends Ship {
     }
 
     public Weapon getWeaponType() {
-        return weaponType;
+        return this.weaponType;
     }
 }

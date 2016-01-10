@@ -4,32 +4,34 @@ import javax.swing.*;
  * Created by Tymek on 10.01.2016.
  */
 public class BuildingInspector {
-    private JList list1;
-    private JList list2;
     private JLabel xLabel;
     private JLabel yLabel;
     private JPanel jpanel;
     private JLabel vehicleTypeLabel;
+    private JList peopleList;
+    private JList vehiclesList;
     private final JFrame frame;
     private Building selectedBuilding;
 
     public BuildingInspector() {
-        frame = new JFrame("Vehicle Inspector");
-        frame.setContentPane(jpanel);
-        frame.setLocation(0, WorldController.getControlPanel().getFrame().getHeight());
-        frame.pack();
-        infiniteLoop();
+        this.frame = new JFrame("Vehicle Inspector");
+        this.frame.setContentPane(this.jpanel);
+        this.frame.setLocation(0, WorldController.getControlPanel().getFrame().getHeight());
+        this.frame.pack();
+        this.infiniteLoop();
     }
 
     private void infiniteLoop() {
         Runnable r = () -> {
             while (true) {
-                if (selectedBuilding != null) {
-                    xLabel.setText(String.valueOf(selectedBuilding.getPosition().getX()));
-                    yLabel.setText(String.valueOf(selectedBuilding.getPosition().getY()));
+                if (this.selectedBuilding != null) {
+                    this.xLabel.setText(String.valueOf(this.selectedBuilding.getPosition().getX()));
+                    this.yLabel.setText(String.valueOf(this.selectedBuilding.getPosition().getY()));
+                    this.vehiclesList.setListData(this.selectedBuilding.getVehicles().toArray());
+                    this.peopleList.setListData(this.selectedBuilding.getPeople().toArray());
 
                 }
-                jpanel.repaint();
+                this.jpanel.repaint();
                 try {
                     Thread.sleep(200);
                 } catch (InterruptedException e) {
@@ -42,19 +44,19 @@ public class BuildingInspector {
     }
 
     public JLabel getyLabel() {
-        return yLabel;
+        return this.yLabel;
     }
 
     public JLabel getxLabel() {
-        return xLabel;
+        return this.xLabel;
     }
 
     public JFrame getFrame() {
-        return frame;
+        return this.frame;
     }
 
     public Building getSelectedBuilding() {
-        return selectedBuilding;
+        return this.selectedBuilding;
     }
 
     public void setSelectedBuilding(Building selectedBuilding) {
@@ -62,6 +64,6 @@ public class BuildingInspector {
     }
 
     public void setVehicleTypeLabel(String v) {
-        vehicleTypeLabel.setText(String.valueOf(v));
+        this.vehicleTypeLabel.setText(String.valueOf(v));
     }
 }
