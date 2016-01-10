@@ -1,9 +1,14 @@
 import javax.swing.*;
+import java.io.Serializable;
 
 /**
  * Created by Tymek on 10.01.2016.
  */
-public class BuildingInspector {
+
+/**
+ * Building Inspector class
+ */
+public class BuildingInspector implements Serializable{
     private JLabel xLabel;
     private JLabel yLabel;
     private JPanel jpanel;
@@ -13,6 +18,9 @@ public class BuildingInspector {
     private final JFrame frame;
     private Building selectedBuilding;
 
+    /**
+     * Constructor which creates frame and starts rendering loop
+     */
     public BuildingInspector() {
         this.frame = new JFrame("Vehicle Inspector");
         this.frame.setContentPane(this.jpanel);
@@ -21,6 +29,9 @@ public class BuildingInspector {
         this.infiniteLoop();
     }
 
+    /**
+     * Rendering loop which refreshes at rate of 5 frames per second
+     */
     private void infiniteLoop() {
         Runnable r = () -> {
             while (true) {
@@ -43,26 +54,26 @@ public class BuildingInspector {
         t.start();
     }
 
-    public JLabel getyLabel() {
-        return this.yLabel;
-    }
-
-    public JLabel getxLabel() {
-        return this.xLabel;
-    }
-
+    /**
+     *
+     * @return returns frame of Building Inspector
+     */
     public JFrame getFrame() {
         return this.frame;
     }
 
-    public Building getSelectedBuilding() {
-        return this.selectedBuilding;
-    }
-
+    /**
+     * Sets selected building at given Building
+     * @param selectedBuilding building
+     */
     public void setSelectedBuilding(Building selectedBuilding) {
         this.selectedBuilding = selectedBuilding;
     }
 
+    /**
+     * Sets label of type of vehicles inside Building.
+     * @param v string
+     */
     public void setVehicleTypeLabel(String v) {
         this.vehicleTypeLabel.setText(String.valueOf(v));
     }

@@ -2,22 +2,24 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Random;
 
 /**
  * Created by Tymek on 30.12.2015.
  */
 
-final class MapConfig {
+final class MapConfig implements Serializable{
 
-    private static BufferedImage passAirportImg;
-    private static BufferedImage crossroadImg;
-    private static BufferedImage passAircraftImg;
-    private static BufferedImage miliAirportImg;
-    private static BufferedImage miliAircraftImg;
-    private static BufferedImage aircraftCarrierImg;
-    private static BufferedImage harborImg;
-    private static BufferedImage passengerShipImg;
+    private static transient BufferedImage passAirportImg;
+    private static transient BufferedImage crossroadImg;
+    private static transient BufferedImage passAircraftImg;
+    private static transient BufferedImage miliAirportImg;
+    private static transient BufferedImage miliAircraftImg;
+    private static transient BufferedImage aircraftCarrierImg;
+    private static transient BufferedImage harborImg;
+    private static transient BufferedImage passengerShipImg;
+    private static transient BufferedImage backgroundImg;
 
     private static Random rn = new Random();
 
@@ -25,8 +27,8 @@ final class MapConfig {
     private static final int pathWidth = 4;
     private static final int maxAirPassengers = 20;
     private static final int minAirPassengers = 5;
-    private static final int minRouteLength = 2;
-    private static final int maxRouteLength = 6;
+    private static final int minRouteLength = 4;
+    private static final int maxRouteLength = 10;
     private static final int minAirportCapacity = 3;
     private static final int maxAirportCapacity = 3;
     private static final int minVehicleSpeed = 2;
@@ -36,6 +38,9 @@ final class MapConfig {
 
     private static boolean crossroadVisible;
     private static boolean pathVisible = true;
+    private static boolean backgroundVisible = true;
+
+    private static String serFileName = "save.ser";
 
 
     private static final PassengerAirport[] passengerAirports = {
@@ -83,6 +88,17 @@ final class MapConfig {
             e.printStackTrace();
         }
     }
+
+    static {
+        try {
+            backgroundImg = ImageIO.read(new File("resources/map.png"));
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+    }
+
 
     static {
         try {
@@ -268,5 +284,21 @@ final class MapConfig {
 
     public static int getMaxPassengerCount() {
         return MapConfig.maxPassengerCount;
+    }
+
+    public static String getSerFileName() {
+        return MapConfig.serFileName;
+    }
+
+    public static BufferedImage getBackgroundImg() {
+        return MapConfig.backgroundImg;
+    }
+
+    public static boolean isBackgroundVisible() {
+        return MapConfig.backgroundVisible;
+    }
+
+    public static void setBackgroundVisible(boolean backgroundVisible) {
+        MapConfig.backgroundVisible = backgroundVisible;
     }
 }

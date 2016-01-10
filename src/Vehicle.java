@@ -8,6 +8,9 @@ import static java.lang.Math.atan2;
  * Created by Tymek on 13.10.15.
  */
 
+/**
+ * Vehicle class
+ */
 public abstract class Vehicle extends PhysicalObject implements Runnable {
     private String uniqueId;
     private float maxFuel;
@@ -22,24 +25,46 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
     private boolean landed;
     private int maxPassengerCount;
 
-
+    /**
+     * Constructor which creates vehicle's list of connections, random UUID and fuel levels.
+     */
     Vehicle() {
         this.passengerLinkedList = new ConcurrentLinkedQueue<>();
         this.setUniqueId(UUID.randomUUID().toString());
         this.setMaxFuel();
         this.setActualFuel(this.getMaxFuel());
+        WorldController.getMainMap().getVehiclesList().add(this);
     }
 
+    /**
+     * Calculates distance which vehicle travels in X axis in one pass of loop
+     * @param posX coordinate X of origin
+     * @param posY coordinate Y of origin
+     * @param tarX coordinate X of destination
+     * @param tarY coordinate Y of destination
+     * @return returns distance per frame
+     */
     private float calculateXVel(float posX, float posY, float tarX, float tarY) {
         float angle = (float) atan2(tarY - posY, tarX - posX);
         return (float) (this.speed * Math.cos(angle));
     }
-
+    /**
+     * Calculates distance which vehicle travels in Y axis in one pass of loop
+     * @param posX coordinate X of origin
+     * @param posY coordinate Y of origin
+     * @param tarX coordinate X of destination
+     * @param tarY coordinate Y of destination
+     * @return returns distance per frame
+     */
     private float calculateYVel(float posX, float posY, float tarX, float tarY) {
         float angle = (float) atan2(tarY - posY, tarX - posX);
         return (float) (this.speed * Math.sin(angle));
     }
 
+    /**
+     * Loops through buildings adding them to route.
+     * @param b current building
+     */
     private void randomizeRoute(Building b) {
         Building tmp1 = b;
         for (int i = 0; i < MapConfig.randInt(MapConfig.getMinRouteLength(), MapConfig.getMaxRouteLength()); i++) {
@@ -49,6 +74,9 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
         }
     }
 
+    /**
+     * Inifnite loop which calculates velocities, check state of vehicle and others
+     */
     @Override
     public void run() {
         if (this.currentBuilding != null) {
@@ -63,7 +91,6 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
         this.distanceTravelled = 0;
         while (true) {
             if (!this.isMoving()) {
-                //noinspection UnqualifiedMethodAccess,UnqualifiedMethodAccess
                 Path temp = Path.calculatePath(this.getPosition(),
                         this.getNextDestination().getPosition(), -7);
                 routeDistance = Point2D.distance(temp.getOrigin().getX(), temp.getOrigin().getY(),
@@ -75,9 +102,7 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
 
                 this.setMoving(true);
             } else {
-                //noinspection UnqualifiedMethodAccess
                 float tmpx = this.getPosition().getX();
-                //noinspection UnqualifiedMethodAccess
                 float tmpy = this.getPosition().getY();
                 tmpx = tmpx + xVel * MapConfig.getVehiclesSpeed();
                 tmpy = tmpy + yVel * MapConfig.getVehiclesSpeed();
@@ -122,52 +147,94 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
         }
     }
 
+    /**
+     *
+     * @return returns next destination of vehicle
+     */
     public Building getNextDestination() {
         return this.nextDestination;
     }
 
+    /**
+     * Sets next destination of vehicle
+     * @param nextDestination Building
+     */
     void setNextDestination(Building nextDestination) {
         this.nextDestination = nextDestination;
     }
 
+    /**
+     * Sets speed to given parameter
+     * @param speed integer
+     */
     void setSpeed(int speed) {
         this.speed = speed;
     }
 
+    /**
+     *
+     * @return returns current building of vehicle
+     */
     Building getCurrentBuilding() {
         return this.currentBuilding;
     }
 
+    /**
+     * Sets current building of vehicle
+     * @param currentBuilding Building
+     */
     void setCurrentBuilding(Building currentBuilding) {
         this.currentBuilding = currentBuilding;
     }
 
+    /**
+     *
+     * @return returns boolean of vehicle moving
+     */
     private boolean isMoving() {
         return this.moving;
     }
 
+    /**
+     * Sets vehicle mooving to given boolean
+     * @param moving boolean
+     */
     void setMoving(boolean moving) {
         this.moving = moving;
     }
 
+    /**
+     *
+     * @return returns route of vehicle
+     */
     public LinkedList<Building> getRoute() {
         return this.route;
     }
 
+    /**
+     * Sets vehicle's route to given list
+     * @param route linked list of buildings
+     */
     void setRoute(LinkedList<Building> route) {
         this.route = route;
     }
 
+    /**
+     * Adds one given building to vehicle's route
+     * @param b
+     */
     private void addToRoute(Building b) {
         this.route.add(b);
     }
 
-    public void arrive() {
-
-    }
-
+    /**
+     * Method used by aircrafts to fly to nearest airport, should be replaced by Interface
+     */
     public abstract void flyToNearest();
 
+    /**
+     * Shows right buttons and labels in Vehicle Inspector for any Vehicle
+     */
     @Override
     void inspect() {
         WorldController.getVehicleInspector().setSelectedVehicle(this);
@@ -175,59 +242,107 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
         WorldController.getBuildingInspector().getFrame().setVisible(false);
     }
 
+    /**
+     * Sets travelled distance to 0;
+     */
     void setDistanceTravelled() {
         this.distanceTravelled = (float) 0;
     }
 
-    public void refuel() {
-        this.actualFuel = this.maxFuel;
-    }
-
+    /**
+     *
+     * @return returns max level of fuel
+     */
     public float getMaxFuel() {
         return this.maxFuel;
     }
 
+    /**
+     * Sets max fuel to 100;
+     */
     private void setMaxFuel() {
         this.maxFuel = (float) 100;
     }
 
+    /**
+     *
+     * @return returns actual level of fuel
+     */
     public float getActualFuel() {
         return this.actualFuel;
     }
 
+    /**
+     * Sets actual level of fuel to given float
+     * @param actualFuel float
+     */
     private void setActualFuel(float actualFuel) {
         this.actualFuel = actualFuel;
     }
 
+    /**
+     *
+     * @return returns unique ID of vehicle
+     */
     public String getUniqueId() {
         return this.uniqueId;
     }
 
+    /**
+     * Sets unique ID of vehicle to given string
+     * @param uniqueId string
+     */
     void setUniqueId(String uniqueId) {
         this.uniqueId = uniqueId;
     }
 
+    /**
+     *
+     * @return returns list of passenger contained by Vehicle
+     */
     public ConcurrentLinkedQueue<Passenger> getPassengerLinkedList() {
         return this.passengerLinkedList;
     }
 
+    /**
+     * Adds one given passenger to Vehicle's passengers list
+     * @param passenger Passenger
+     */
     public void addPassenger(Passenger passenger){
         this.passengerLinkedList.add(passenger);
     }
 
+    /**
+     * removes one given passenger from Vehicle's passenger list
+     * @param passenger Passenger
+     */
     public void removePassenger(Passenger passenger){
         this.passengerLinkedList.remove(passenger);
     }
 
+    /**
+     *
+     * @return returns true if vehicle is in building, else returns false
+     */
     public boolean isLanded() {
         return this.landed;
     }
 
+    /**
+     *
+     * @return returns maximum count of possible vehicle's passengers
+     */
     public int getMaxPassengerCount() {
         return this.maxPassengerCount;
     }
 
+    /**
+     * Sets maximum passenger count to given value
+     * @param maxPassengerCount integer
+     */
     public void setMaxPassengerCount(int maxPassengerCount) {
         this.maxPassengerCount = maxPassengerCount;
     }
+
+
 }

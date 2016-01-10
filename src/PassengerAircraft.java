@@ -4,8 +4,13 @@
 
 import java.awt.image.BufferedImage;
 
+/**
+ * Passenger Aircraft class
+ */
 public class PassengerAircraft extends Aircraft {
-
+    /**
+     * Constructor which randoms first Aircraft airport and other parameters
+     */
     public PassengerAircraft() {
         WorldController.getMainMap().addObjectToDraw(this);
         this.setCurrentBuilding(MapConfig.getPassengerAirports()[MapConfig.randInt(0,
@@ -18,26 +23,26 @@ public class PassengerAircraft extends Aircraft {
                 MapConfig.getMaxPassengerCount()));
     }
 
+    /**
+     *
+     * @return returns BufferedImage of Passenger Aircraft
+     */
     @Override
     BufferedImage getImage() {
         return MapConfig.getPassAircraftImg();
     }
-
-    @Override
-    public void refuel() {
-
-    }
-
-    @Override
-    public void arrive() {
-        this.refuel();
-    }
-
+    /**
+     * Shows right buttons and labels in Vehicle Inspector for Passenger Aircraft
+     */
     @Override
     public void inspect() {
         super.inspect();
         WorldController.getVehicleInspector().getSpawnPlaneButton().setVisible(false);
         WorldController.getVehicleInspector().getPassengerPane().setVisible(true);
         WorldController.getVehicleInspector().getPassengersLabel().setVisible(true);
+        WorldController.getVehicleInspector().getActPassLabel().setVisible(true);
+        WorldController.getVehicleInspector().getMaxPassLabel().setVisible(true);
+        WorldController.getVehicleInspector().getActPassValueLabel().setVisible(true);
+        WorldController.getVehicleInspector().getMaxPassValue().setVisible(true);
     }
 }

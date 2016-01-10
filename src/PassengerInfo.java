@@ -1,28 +1,21 @@
+import java.io.Serializable;
+
 /**
  * Created by Tymek on 13.10.15.
  */
-class PassengerInfo {
+
+/**
+ * Passenger Info class, basically a container for Passenger numbers
+ */
+class PassengerInfo implements Serializable{
     private int maxPassengerCount;
     private int actualPassengerCount;
 
+    /**
+     * Constructor which sets Max Count to number from config, and randoms Actual Count from 0 to Max
+     */
     public PassengerInfo() {
         this.maxPassengerCount = MapConfig.randInt(MapConfig.getMinAirPassengers(), MapConfig.getMaxAirPassengers());
         this.actualPassengerCount = MapConfig.randInt(0, this.maxPassengerCount);
-    }
-
-    public int getMaxPassengerCount() {
-        return this.maxPassengerCount;
-    }
-
-    public void setMaxPassengerCount(int maxPassengerCount) {
-        this.maxPassengerCount = maxPassengerCount;
-    }
-
-    public int getActualPassengerCount() {
-        return this.actualPassengerCount;
-    }
-
-    public void setActualPassengerCount(int actualPassengerCount) {
-        this.actualPassengerCount = actualPassengerCount;
     }
 }

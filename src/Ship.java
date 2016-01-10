@@ -1,10 +1,14 @@
 /**
  * Created by Tymek on 13.10.15.
  */
-abstract class Ship extends Vehicle {
-    Ship() {
-    }
 
+/**
+ * Ship class
+ */
+abstract class Ship extends Vehicle {
+    /**
+     * Shows right buttons and labels in Vehicle Inspector for Ship
+     */
     @Override
     void inspect() {
         super.inspect();

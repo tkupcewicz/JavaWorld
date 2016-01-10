@@ -5,15 +5,30 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * Path class
+ */
 public class Path extends PhysicalObject {
     private Position destination;
     private Position origin;
 
+    /**
+     * Constructor which creates path of given positions A and B
+     * @param a Position
+     * @param b Position
+     */
     public Path(Position a, Position b) {
         this.destination = a;
         this.origin = b;
     }
 
+    /**
+     * Calculates one path between two Positions moved to left if pathWidth negative or right if it's positiove
+     * @param A Position
+     * @param B Position
+     * @param pathWidth integer of which Path will be moved to right or left
+     * @return returns calculated Path
+     */
     public static Path calculatePath(Position A, Position B, int pathWidth) {
         float xA = A.getX();
         float yA = A.getY();
@@ -30,22 +45,26 @@ public class Path extends PhysicalObject {
         return new Path(aPrim, bPrim);
     }
 
+    /**
+     *
+     * @return returns first position of path
+     */
     public Position getDestination() {
         return this.destination;
     }
 
-    public void setDestination(Position destination) {
-        this.destination = destination;
-    }
-
+    /**
+     *
+     * @return returns second position of path
+     */
     public Position getOrigin() {
         return this.origin;
     }
 
-    public void setOrigin(Position origin) {
-        this.origin = origin;
-    }
-
+    /**
+     * Draws line between two points of path
+     * @param g image
+     */
     @Override
     void drawImage(Graphics g) {
         if (MapConfig.isPathVisible()) {
@@ -64,6 +83,9 @@ public class Path extends PhysicalObject {
         return null;
     }
 
+    /**
+     * Method created by lack of time to create interface
+     */
     @Override
     void inspect() {
 

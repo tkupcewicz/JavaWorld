@@ -3,15 +3,24 @@ import java.awt.geom.Point2D;
 /**
  * Created by Tymek on 13.10.15.
  */
+
+/**
+ * Abstract Aircraft class
+ */
 public abstract class Aircraft extends Vehicle {
 
     private int stuffCount;
 
-
+    /**
+     * Sets stuff count at 10
+     */
     Aircraft() {
         this.stuffCount = 10;
     }
 
+    /**
+     * Finds nearest airport and sets it as next destination.
+     */
     @Override
     public void flyToNearest() {
         float distance;
@@ -34,7 +43,9 @@ public abstract class Aircraft extends Vehicle {
         }
     }
 
-
+    /**
+     * Shows right buttons and labels in Vehicle Inspector for Aircraft
+     */
     @Override
     void inspect() {
         super.inspect();
@@ -42,17 +53,4 @@ public abstract class Aircraft extends Vehicle {
         WorldController.getVehicleInspector().getCompanyValueLabel().setVisible(false);
         WorldController.getVehicleInspector().getEmergencyLandingButton().setVisible(true);
     }
-
-    public int getStuffCount() {
-        return this.stuffCount;
-    }
-
-    public void setStuffCount(int stuffCount) {
-        this.stuffCount = stuffCount;
-    }
-
-    public Building getRandomConnected(){
-        return MapConfig.getPassengerAirports()[MapConfig.randInt(0, MapConfig.getPassengerAirports().length - 1)];
-    }
-
 }

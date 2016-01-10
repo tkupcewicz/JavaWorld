@@ -1,10 +1,15 @@
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Random;
 
 /**
  * Created by Tymek on 13.10.15.
  */
-public class Passenger implements Runnable{
+
+/**
+ * Passenger class
+ */
+public class Passenger implements Runnable, Serializable{
     private String name;
     private String surname;
     private String peselId;
@@ -15,14 +20,22 @@ public class Passenger implements Runnable{
     private Building destination;
     private boolean travelling;
 
+    /**
+     * Default constructor which generates Name, Surname, PESEL and age.
+     */
     public Passenger() {
         this.name = new String(this.randomString());
         this.surname = new String(this.randomString());
         this.peselId = new String(this.randomPesel());
         this.age = 25;
-        System.out.println("peep spawned " + this.toString() );
+      //  System.out.println("peep spawned " + this.toString() );
+        WorldController.getMainMap().getPassengerLinkedList().add(this);
     }
 
+    /**
+     *
+     * @return returns random string of length of 20 generated from alphabet
+     */
     public String randomString(){
         char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
         StringBuilder sb = new StringBuilder();
@@ -34,6 +47,11 @@ public class Passenger implements Runnable{
         String output = sb.toString();
         return output;
     }
+
+    /**
+     *
+     * @return returns random string of length of 12 generated from numbers 0-9
+     */
     public String randomPesel(){
         char[] chars = "0123456789".toCharArray();
         StringBuilder sb = new StringBuilder();
@@ -46,31 +64,34 @@ public class Passenger implements Runnable{
         return output;
     }
 
+    /**
+     *
+     * @return returns random destinations from whole connections net in which Actual Building is
+     */
     public Building randomDestination(){
         Building dest = this.actualBuilding.getRandomConnected();
         return dest;
     }
 
+    /**
+     *  Run method containing infinite loop
+     */
     @Override
     public void run() {
         this.homeBuilding = WorldController.getMainMap().getPassBuildings().get(MapConfig.randInt(0,
                 WorldController.getMainMap().getPassBuildings().size() -1));
-        System.out.println("Home building is" + homeBuilding.toString() + " at " + homeBuilding.getPosition().toString());
         this.actualBuilding = this.homeBuilding;
         this.actualBuilding.addToPeople(this);
         this.destination = this.randomDestination();
-        System.out.println("Destination building is" + destination.toString() + " at " + destination.getPosition().toString());
         this.travelling = false;
 
 
         while(true){
             if(!this.travelling){
-//                System.out.println("Looking for transport");
                 Iterator<Vehicle> itr =  this.actualBuilding.getVehicles().iterator();
                 while(itr.hasNext()){
                     Vehicle veh = itr.next();
                     if(veh.getRoute().contains(this.destination)){
-//                        System.out.println("Found transport in " + veh.toString());
                         if(veh.getPassengerLinkedList().size() < veh.getMaxPassengerCount()){
                             this.actualVehicle = veh;
                             veh.addPassenger(this);
@@ -83,11 +104,8 @@ public class Passenger implements Runnable{
                 }
             }
             else{
-//                System.out.println("Travelling");
                 if(this.actualVehicle.isLanded()){
-//                    System.out.println("Vehicle landed");
                     if(this.actualVehicle.getNextDestination().equals(this.destination)){
-//                        System.out.println("Vehicle landed at right place");
                         this.actualBuilding = this.destination;
                         this.actualVehicle.removePassenger(this);
                         this.actualBuilding.addToPeople(this);

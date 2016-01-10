@@ -7,6 +7,9 @@ abstract class Airport extends Building {
 
     }
 
+    /**
+     * Sets Vehicles Label in Inspector to Planes:
+     */
     @Override
     public void inspect() {
         super.inspect();

@@ -1,23 +1,34 @@
 import java.awt.geom.Line2D;
+import java.io.Serializable;
 import java.util.LinkedList;
 
 /**
  * Created by Tymek on 28.12.2015.
  */
-@SuppressWarnings("ForLoopReplaceableByForEach")
-public final class Map {
 
-    private static LinkedList<PhysicalObject> objectsToDraw;
-    private final LinkedList<Crossroad> crossroadsList;
-    private final LinkedList<Building> airportList;
-    private final LinkedList<Building> harborList;
-    private final LinkedList<Building> passBuildings;
+/**
+ * Class of Map which creates lists of objects and loads parameters from Map Config
+ */
+public final class Map implements Serializable{
 
+    private LinkedList<PhysicalObject> objectsToDraw;
+    private LinkedList<Crossroad> crossroadsList;
+    private LinkedList<Building> airportList;
+    private LinkedList<Building> harborList;
+    private LinkedList<Building> passBuildings;
+    private LinkedList<Vehicle> vehiclesList;
+    private LinkedList<Passenger> passengerLinkedList;
+
+    /**
+     * Constructor which creates lists of objects, randoms connections between Buildings.
+     * Calculates crossroads.
+     */
     public Map() {
-
+        this.vehiclesList = new LinkedList<>();
         this.harborList = new LinkedList<>();
         this.airportList = new LinkedList<>();
-        objectsToDraw = new LinkedList<>();
+        this.objectsToDraw = new LinkedList<>();
+        this.passengerLinkedList = new LinkedList<>();
 
         this.loadHarbors();
         this.loadPassAirports();
@@ -38,6 +49,13 @@ public final class Map {
 
     }
 
+    /**
+     * Creates around 3 connections from every building in given Building array to Building from given list.
+     * Checks in Path List if path doesn't exist.
+     * @param a Building array
+     * @param l Building list
+     * @param pathlist paths list
+     */
     private void createConnections(Building a[], LinkedList<Building> l, LinkedList<Path> pathlist) {
         for (int i = 0; i < a.length - 1; i++) {
             for (int j = 0; j < MapConfig.randInt(3, 3); j++) {
@@ -56,6 +74,11 @@ public final class Map {
         }
     }
 
+    /**
+     * Calculates crossroads between paths. Because there are two paths between A and B: A->B and B->A it calculates
+     * four crossroads per intersection. Feature not bug.
+     * @param paths paths list
+     */
     private void calculateCrossroads(LinkedList<Path> paths) {
         for (int i = 0; i < paths.size() - 1; i++) {
             for (int j = i + 1; j < paths.size(); j++) {
@@ -88,29 +111,35 @@ public final class Map {
         }
     }
 
-
-    public PassengerAirport[] getPassengerAirports() {
-        return MapConfig.getPassengerAirports();
-    }
-
+    /**
+     * Adds object to list of objects to draw
+     * @param obj Physical Object
+     */
     public void addObjectToDraw(PhysicalObject obj) {
         objectsToDraw.add(obj);
     }
 
+    /**
+     * Loads passenger airports from Map Config to Airport list and Objects to draw list.
+     */
     private void loadPassAirports() {
         for (int i = 0; i < MapConfig.getPassengerAirports().length; i++) {
             this.addObjectToDraw(MapConfig.getPassengerAirports()[i]);
             this.addAirport(MapConfig.getPassengerAirports()[i]);
         }
     }
-
+    /**
+     * Loads military airports from Map Config to Airport list and Objects to draw list.
+     */
     private void loadMiliAirports() {
         for (int i = 0; i < MapConfig.getMilitaryAirports().length; i++) {
             this.addObjectToDraw(MapConfig.getMilitaryAirports()[i]);
             this.addAirport(MapConfig.getMilitaryAirports()[i]);
         }
     }
-
+    /**
+     * Loads harbors from Map Config to Airport list and Objects to draw list.
+     */
     private void loadHarbors() {
         for (int i = 0; i < MapConfig.getHarbors().length; i++) {
             this.addObjectToDraw(MapConfig.getHarbors()[i]);
@@ -118,29 +147,69 @@ public final class Map {
         }
     }
 
+    /**
+     *
+     * @return returns objects to draw list
+     */
     public LinkedList<PhysicalObject> getObjectsToDraw() {
         return objectsToDraw;
     }
 
+    /**
+     * Adds single airport to airports list.
+     * @param a Airport
+     */
     private void addAirport(Airport a) {
         this.airportList.add(a);
     }
 
+    /**
+     * Adds single harbor to harbors list.
+     * @param h Harbor
+     */
     private void addHarbor(Harbor h) {
         this.harborList.add(h);
     }
 
+    /**
+     *
+     * @return returns airports list.
+     */
     public LinkedList<Building> getAirportList() {
         return this.airportList;
     }
 
+    /**
+     *
+     * @return passenger buildings list.
+     */
     public LinkedList<Building> getPassBuildings() {
         return this.passBuildings;
     }
 
+    /**
+     * Spawns passenger at random passenger location
+     */
     public void spawnPassenger(){
         Runnable r = new Passenger();
         Thread t = new Thread(r);
         t.start();
     }
+
+    /**
+     *
+     * @return returns list of vehicles
+     */
+    public LinkedList<Vehicle> getVehiclesList() {
+        return this.vehiclesList;
+    }
+
+    /**
+     *
+     * @return returns list of passengers
+     */
+    public LinkedList<Passenger> getPassengerLinkedList() {
+        return this.passengerLinkedList;
+    }
+
 }

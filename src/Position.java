@@ -1,35 +1,46 @@
+import java.io.Serializable;
+
 /**
  * Created by Tymek on 13.10.15.
  */
-public class Position {
+
+/**
+ * Position class
+ */
+public class Position implements Serializable{
     private float x;
     private float y;
 
-    public Position() {
-
-    }
-
+    /**
+     * Constructor which creates position of given coordinates X and Y
+     * @param x float
+     * @param y float
+     */
     public Position(float x, float y) {
         this.x = x;
         this.y = y;
     }
 
+    /**
+     *
+     * @return returns X of position
+     */
     public float getX() {
         return this.x;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
+    /**
+     *
+     * @return returns Y of position
+     */
     public float getY() {
         return this.y;
     }
 
-    public void setY(int y) {
-        this.y = y;
-    }
-
+    /**
+     *
+     * @return returns string of position
+     */
     @Override
     public String toString() {
         return "X: " + this.x + " Y: " + this.y + " ";
