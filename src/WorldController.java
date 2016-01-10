@@ -8,6 +8,7 @@ public class WorldController extends JPanel {
     private static WorldController worldController;
     private static ControlPanel controlPanel;
     private static VehicleInspector vehicleInspector;
+    private static BuildingInspector buildingInspector;
     private static Map mainMap;
     private JFrame mainFrame;
 
@@ -30,11 +31,15 @@ public class WorldController extends JPanel {
         return vehicleInspector;
     }
 
+    public static BuildingInspector getBuildingInspector() {
+        return buildingInspector;
+    }
+
     public WorldController() {
 
         mainFrame = new JFrame("JavaWorld");
 
-        this.setPreferredSize(new Dimension(1200,800));
+        this.setPreferredSize(new Dimension(1050,800));
 
         mainFrame.getContentPane().add(this);
 
@@ -42,12 +47,14 @@ public class WorldController extends JPanel {
 
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        mainFrame.setLocation(controlPanel.getFrame().getWidth(), 0);
+
         mainFrame.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 setSelected(null);
                 for (PhysicalObject object:mainMap.getObjectsToDraw()) {
-                    Rectangle rect = null;
+                    Rectangle rect;
                     if(object.getImage() != null) {
                         rect = new Rectangle((int) object.getPosition().getX() - object.getImage().getWidth() / 2,
                                 (int) object.getPosition().getY() - object.getImage().getHeight() / 2,
@@ -59,6 +66,8 @@ public class WorldController extends JPanel {
                             break;
                         }
                     }
+                    vehicleInspector.getFrame().setVisible(false);
+                    buildingInspector.getFrame().setVisible(false);
                 }
             }
 
@@ -116,9 +125,10 @@ public class WorldController extends JPanel {
 
     public static void main(String args[]) {
         mainMap = new Map();
-        worldController = new WorldController();
         controlPanel = new ControlPanel();
         vehicleInspector = new VehicleInspector();
+        buildingInspector = new BuildingInspector();
+        worldController = new WorldController();
     }
 
     public static Map getMainMap() {
@@ -132,5 +142,9 @@ public class WorldController extends JPanel {
                     getSelected().getImage().getHeight(),
                     getSelected().getImage().getWidth());
         }
+    }
+
+    public static ControlPanel getControlPanel() {
+        return controlPanel;
     }
 }

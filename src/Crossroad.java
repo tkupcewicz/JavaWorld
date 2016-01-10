@@ -29,7 +29,7 @@ public class Crossroad extends PhysicalObject {
 
     @Override
     void inspect() {
-
+        WorldController.getBuildingInspector().getFrame().setVisible(false);
     }
 
 }

@@ -9,8 +9,7 @@ public class PassengerAircraft extends Aircraft {
     private PassengerInfo passengerInfo;
 
     public PassengerAircraft() {
-        //super();
-        this.setUniqueId(UUID.randomUUID().toString());
+        super();
         WorldController.getMainMap().addObjectToDraw(this);
         this.setCurrentBuilding(MapConfig.getPassengerAirports()[MapConfig.randInt(0,
                 MapConfig.getPassengerAirports().length - 1)]);
@@ -38,11 +37,6 @@ public class PassengerAircraft extends Aircraft {
     }
 
     void leaveAirport() {
-
-    }
-
-    @Override
-    void moveTo() {
 
     }
 

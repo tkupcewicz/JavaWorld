@@ -4,16 +4,14 @@ import java.awt.geom.Point2D;
  * Created by Tymek on 13.10.15.
  */
 public abstract class Aircraft extends Vehicle{
-    private float maxFuel;
-    private float actualFuel;
+
     private int stuffCount;
 
-    public void refuel(){
-        this.actualFuel = this.maxFuel;
-    }
+
 
     public Aircraft(){
-
+        super();
+        this.stuffCount = 10;
     }
     
     public void flyToNearest(){
@@ -37,20 +35,12 @@ public abstract class Aircraft extends Vehicle{
         }
     }
 
-    public float getMaxFuel() {
-        return maxFuel;
-    }
 
-    public void setMaxFuel(float maxFuel) {
-        this.maxFuel = maxFuel;
-    }
-
-    public float getActualFuel() {
-        return actualFuel;
-    }
-
-    public void setActualFuel(float actualFuel) {
-        this.actualFuel = actualFuel;
+    public void inspect(){
+        super.inspect();
+        WorldController.getVehicleInspector().getCompanyNameLabel().setVisible(false);
+        WorldController.getVehicleInspector().getCompanyValueLabel().setVisible(false);
+        WorldController.getVehicleInspector().getEmergencyLandingButton().setVisible(true);
     }
 
     public int getStuffCount() {

@@ -5,14 +5,16 @@ import java.awt.image.BufferedImage;
 import java.util.UUID;
 
 public class AircraftCarrier extends Ship {
+    private Weapon weaponType;
 
     public AircraftCarrier() {
-        this.setUniqueId(UUID.randomUUID().toString());
+        super();
         WorldController.getMainMap().addObjectToDraw(this);
         this.setCurrentBuilding(MapConfig.getHarbors()[MapConfig.randInt(0,
                 MapConfig.getHarbors().length - 1)]);
         this.setPosition(this.getCurrentBuilding().getPosition().getX(), this.getCurrentBuilding().getPosition().getY());
         this.setSpeed(MapConfig.randInt(MapConfig.getMinVehicleSpeed(), MapConfig.getMaxVehicleSpeed()));
+        this.weaponType = Weapon.getRandom();
     }
 
     @Override
@@ -21,6 +23,8 @@ public class AircraftCarrier extends Ship {
         WorldController.getVehicleInspector().getSpawnPlaneButton().setVisible(true);
         WorldController.getVehicleInspector().getPassengerPane().setVisible(false);
         WorldController.getVehicleInspector().getPassengersLabel().setVisible(false);
+        WorldController.getVehicleInspector().getCompanyNameLabel().setVisible(false);
+        WorldController.getVehicleInspector().getCompanyValueLabel().setVisible(false);
     }
 
     @Override
@@ -28,19 +32,12 @@ public class AircraftCarrier extends Ship {
         return MapConfig.getAircraftCarrierImg();
     }
 
-    void spawnMiliPlane() {
-
-    }
-
-
-    @Override
-    void moveTo() {
-
-    }
-
     @Override
     public void flyToNearest() {
 
     }
 
+    public Weapon getWeaponType() {
+        return weaponType;
+    }
 }

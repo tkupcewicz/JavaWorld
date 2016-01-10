@@ -18,4 +18,9 @@ public class Harbor extends Building {
     BufferedImage getImage() {
         return MapConfig.getHarborImg();
     }
+
+    public void inspect(){
+        super.inspect();
+        WorldController.getBuildingInspector().setVehicleTypeLabel("Ships: ");
+    }
 }

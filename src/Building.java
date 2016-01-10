@@ -21,6 +21,8 @@ public abstract class Building extends PhysicalObject {
 
 
     public void inspect(){
-
+        WorldController.getBuildingInspector().getFrame().setVisible(true);
+        WorldController.getVehicleInspector().getFrame().setVisible(false);
+        WorldController.getBuildingInspector().setSelectedBuilding(this);
     }
 }
