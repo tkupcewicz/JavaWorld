@@ -9,6 +9,10 @@ import java.util.Random;
  * Created by Tymek on 30.12.2015.
  */
 
+/**
+ * Config class containing all preset variables
+ */
+
 final class MapConfig implements Serializable{
 
     private static transient BufferedImage passAirportImg;
