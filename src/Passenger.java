@@ -1,5 +1,4 @@
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Random;
 
 /**
@@ -72,11 +71,14 @@ public class Passenger implements Runnable{
                     Vehicle veh = itr.next();
                     if(veh.getRoute().contains(this.destination)){
 //                        System.out.println("Found transport in " + veh.toString());
-                        this.actualVehicle = veh;
-                        veh.addPassenger(this);
-                        this.actualBuilding.deleteFromPeople(this);
-                        this.travelling = true;
-                        break;
+                        if(veh.getPassengerLinkedList().size() < veh.getMaxPassengerCount()){
+                            this.actualVehicle = veh;
+                            veh.addPassenger(this);
+                            this.actualBuilding.deleteFromPeople(this);
+                            this.travelling = true;
+                            break;
+                        }
+
                     }
                 }
             }

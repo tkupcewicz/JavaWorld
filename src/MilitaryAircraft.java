@@ -16,6 +16,7 @@ class MilitaryAircraft extends Aircraft {
         Weapon weaponType = Weapon.getRandom();
         this.setSpeed(MapConfig.randInt(MapConfig.getMinVehicleSpeed(), MapConfig.getMaxVehicleSpeed()));
         this.flyToNearest();
+        this.setMaxPassengerCount(0);
 
     }
 
