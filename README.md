@@ -21,7 +21,11 @@ Also, some fun content made during writing this project:
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=WWGClYYGYSc
 " target="_blank"><img src="http://img.youtube.com/vi/WWGClYYGYSc/0.jpg" 
-alt="Text" width="240" height="180" border="10" /></a>
+alt="Through the airport and planes" width="240" height="180" border="10" /></a>
 
-[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/OPFwrujCh_0/0.jpg)](http://www.youtube.com/watch?v=OPFwrujCh_0)
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=OPFwrujCh_0
+" target="_blank"><img src="http://img.youtube.com/vi/OPFwrujCh_0/0.jpg" 
+alt="Farewell little friend. " width="240" height="180" border="10" /></a>
+
+
 
