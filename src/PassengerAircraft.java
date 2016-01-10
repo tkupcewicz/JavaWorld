@@ -14,6 +14,8 @@ public class PassengerAircraft extends Aircraft {
         PassengerInfo passengerInfo = new PassengerInfo();
         this.setSpeed(MapConfig.randInt(MapConfig.getMinVehicleSpeed(), MapConfig.getMaxVehicleSpeed()));
         System.out.println("Plane spawned");
+        this.setMaxPassengerCount(MapConfig.randInt(MapConfig.getMinPassengerCount(),
+                MapConfig.getMaxPassengerCount()));
     }
 
     @Override

@@ -14,6 +14,7 @@ public class AircraftCarrier extends Ship {
         this.setPosition(this.getCurrentBuilding().getPosition().getX(), this.getCurrentBuilding().getPosition().getY());
         this.setSpeed(MapConfig.randInt(MapConfig.getMinVehicleSpeed(), MapConfig.getMaxVehicleSpeed()));
         this.weaponType = Weapon.getRandom();
+        this.setMaxPassengerCount(0);
     }
 
     @Override

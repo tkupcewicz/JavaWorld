@@ -63,4 +63,7 @@ public abstract class Building extends PhysicalObject {
 
     public abstract Building getRandomConnected();
 
+    public int getBuildingCapacity() {
+        return this.buildingCapacity;
+    }
 }

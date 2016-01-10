@@ -63,6 +63,7 @@ public class VehicleInspector {
                     this.fuelBar.setValue((int) this.selectedVehicle.getActualFuel());
                     this.routeList.setEnabled(false);
                     this.passengerList.setListData(this.selectedVehicle.getPassengerLinkedList().toArray());
+                    this.deleteButton.setEnabled(false);
                 }
 
                 this.jpanel.repaint();

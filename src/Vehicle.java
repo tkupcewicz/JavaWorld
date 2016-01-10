@@ -1,8 +1,7 @@
 import com.sun.javafx.geom.Point2D;
-
 import java.util.LinkedList;
 import java.util.UUID;
-
+import java.util.concurrent.ConcurrentLinkedQueue;
 import static java.lang.Math.atan2;
 
 /**
@@ -17,14 +16,15 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
     private Building nextDestination;
     private Building currentBuilding;
     private LinkedList<Building> route;
-    private LinkedList<Passenger> passengerLinkedList;
+    private ConcurrentLinkedQueue<Passenger> passengerLinkedList;
     private float distanceTravelled;
     private boolean moving;
     private boolean landed;
+    private int maxPassengerCount;
 
 
     Vehicle() {
-        this.passengerLinkedList = new LinkedList<>();
+        this.passengerLinkedList = new ConcurrentLinkedQueue<>();
         this.setUniqueId(UUID.randomUUID().toString());
         this.setMaxFuel();
         this.setActualFuel(this.getMaxFuel());
@@ -90,16 +90,17 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
                     this.distanceTravelled = 0;
                     this.setMoving(false);
                     this.setPosition(this.nextDestination.getPosition());
-                    this.landed = true;
-                    this.nextDestination.addToVehicles(this);
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                    if(nextDestination.getVehicles().size() < nextDestination.getBuildingCapacity()){
+                        this.landed = true;
+                        this.nextDestination.addToVehicles(this);
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        this.nextDestination.deleteFromVehicles(this);
+                        this.landed = false;
                     }
-                    this.nextDestination.deleteFromVehicles(this);
-                    this.landed = false;
-
                     this.setCurrentBuilding(this.getNextDestination());
                     this.actualFuel = this.maxFuel;
                     if (this.route.size() == 1) {
@@ -206,7 +207,7 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
         this.uniqueId = uniqueId;
     }
 
-    public LinkedList<Passenger> getPassengerLinkedList() {
+    public ConcurrentLinkedQueue<Passenger> getPassengerLinkedList() {
         return this.passengerLinkedList;
     }
 
@@ -220,5 +221,13 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
 
     public boolean isLanded() {
         return this.landed;
+    }
+
+    public int getMaxPassengerCount() {
+        return this.maxPassengerCount;
+    }
+
+    public void setMaxPassengerCount(int maxPassengerCount) {
+        this.maxPassengerCount = maxPassengerCount;
     }
 }

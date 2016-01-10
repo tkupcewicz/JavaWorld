@@ -15,6 +15,8 @@ public class PassengerShip extends Ship {
                 MapConfig.getHarbors().length - 1)]);
         this.setPosition(this.getCurrentBuilding().getPosition().getX(), this.getCurrentBuilding().getPosition().getY());
         this.setSpeed(MapConfig.randInt(MapConfig.getMinVehicleSpeed(), MapConfig.getMaxVehicleSpeed()));
+        this.setMaxPassengerCount(MapConfig.randInt(MapConfig.getMinPassengerCount(),
+                MapConfig.getMaxPassengerCount()));
     }
 
 

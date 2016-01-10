@@ -28,9 +28,11 @@ final class MapConfig {
     private static final int minRouteLength = 2;
     private static final int maxRouteLength = 6;
     private static final int minAirportCapacity = 3;
-    private static final int maxAirportCapacity = 8;
+    private static final int maxAirportCapacity = 3;
     private static final int minVehicleSpeed = 2;
     private static final int maxVehicleSpeed = 4;
+    private static final int minPassengerCount = 5;
+    private static final int maxPassengerCount = 15;
 
     private static boolean crossroadVisible;
     private static boolean pathVisible = true;
@@ -258,5 +260,13 @@ final class MapConfig {
 
     public static BufferedImage getPassengerShipImg() {
         return passengerShipImg;
+    }
+
+    public static int getMinPassengerCount() {
+        return MapConfig.minPassengerCount;
+    }
+
+    public static int getMaxPassengerCount() {
+        return MapConfig.maxPassengerCount;
     }
 }
