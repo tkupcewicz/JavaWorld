@@ -4,7 +4,7 @@
 abstract class Airport extends Building {
 
     Airport() {
-        int aircraftCapacity = MapConfig.randInt(MapConfig.getMinAirportCapacity(), MapConfig.getMaxAirportCapacity());
+
     }
 
     @Override

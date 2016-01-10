@@ -17,82 +17,98 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
     private Building nextDestination;
     private Building currentBuilding;
     private LinkedList<Building> route;
+    private LinkedList<Passenger> passengerLinkedList;
     private float distanceTravelled;
     private boolean moving;
+    private boolean landed;
+
 
     Vehicle() {
-        setUniqueId(UUID.randomUUID().toString());
-        setMaxFuel();
-        setActualFuel(getMaxFuel());
+        this.passengerLinkedList = new LinkedList<>();
+        this.setUniqueId(UUID.randomUUID().toString());
+        this.setMaxFuel();
+        this.setActualFuel(this.getMaxFuel());
     }
 
     private float calculateXVel(float posX, float posY, float tarX, float tarY) {
         float angle = (float) atan2(tarY - posY, tarX - posX);
-        return (float) (speed * Math.cos(angle));
+        return (float) (this.speed * Math.cos(angle));
     }
 
     private float calculateYVel(float posX, float posY, float tarX, float tarY) {
         float angle = (float) atan2(tarY - posY, tarX - posX);
-        return (float) (speed * Math.sin(angle));
+        return (float) (this.speed * Math.sin(angle));
     }
 
     private void randomizeRoute(Building b) {
         Building tmp1 = b;
         for (int i = 0; i < MapConfig.randInt(MapConfig.getMinRouteLength(), MapConfig.getMaxRouteLength()); i++) {
             Building tmp2 = tmp1.getConnections().get(MapConfig.randInt(0, tmp1.getConnections().size() - 1));
-            addToRoute(tmp2);
+            this.addToRoute(tmp2);
             tmp1 = tmp2;
         }
     }
 
     @Override
     public void run() {
-        if (currentBuilding != null) {
-            route = new LinkedList<>();
-            randomizeRoute(currentBuilding);
-            setNextDestination(route.get(0));
-            route.remove(0);
+        if (this.currentBuilding != null) {
+            this.route = new LinkedList<>();
+            this.randomizeRoute(this.currentBuilding);
+            this.setNextDestination(this.route.get(0));
+            this.route.remove(0);
         }
         float xVel = 0;
         float yVel = 0;
         float routeDistance = 0;
-        distanceTravelled = 0;
+        this.distanceTravelled = 0;
         while (true) {
-            if (!isMoving()) {
-                Path temp = Path.calculatePath(getPosition(),
-                        getNextDestination().getPosition(), -7);
+            if (!this.isMoving()) {
+                //noinspection UnqualifiedMethodAccess,UnqualifiedMethodAccess
+                Path temp = Path.calculatePath(this.getPosition(),
+                        this.getNextDestination().getPosition(), -7);
                 routeDistance = Point2D.distance(temp.getOrigin().getX(), temp.getOrigin().getY(),
                         temp.getDestination().getX(), temp.getDestination().getY());
-                setPosition(temp.getDestination().getX(), temp.getDestination().getY());
+                this.setPosition(temp.getDestination().getX(), temp.getDestination().getY());
 
-                xVel = calculateXVel(temp.getDestination().getX(), temp.getDestination().getY(), temp.getOrigin().getX(), temp.getOrigin().getY());
-                yVel = calculateYVel(temp.getDestination().getX(), temp.getDestination().getY(), temp.getOrigin().getX(), temp.getOrigin().getY());
+                xVel = this.calculateXVel(temp.getDestination().getX(), temp.getDestination().getY(), temp.getOrigin().getX(), temp.getOrigin().getY());
+                yVel = this.calculateYVel(temp.getDestination().getX(), temp.getDestination().getY(), temp.getOrigin().getX(), temp.getOrigin().getY());
 
-                setMoving(true);
+                this.setMoving(true);
             } else {
-                float tmpx = getPosition().getX();
-                float tmpy = getPosition().getY();
+                //noinspection UnqualifiedMethodAccess
+                float tmpx = this.getPosition().getX();
+                //noinspection UnqualifiedMethodAccess
+                float tmpy = this.getPosition().getY();
                 tmpx = tmpx + xVel * MapConfig.getVehiclesSpeed();
                 tmpy = tmpy + yVel * MapConfig.getVehiclesSpeed();
-                setActualFuel(getActualFuel() - 0.15f * MapConfig.getVehiclesSpeed());
+                this.setActualFuel(this.getActualFuel() - 0.15f * MapConfig.getVehiclesSpeed());
 
-                setPosition(tmpx, tmpy);
-                distanceTravelled = (float) (distanceTravelled + Math.sqrt(Math.pow(xVel * MapConfig.getVehiclesSpeed(), 2) + Math.pow(yVel * MapConfig.getVehiclesSpeed(), 2)));
+                this.setPosition(tmpx, tmpy);
+                this.distanceTravelled = (float) (this.distanceTravelled + Math.sqrt(Math.pow(xVel * MapConfig.getVehiclesSpeed(), 2) + Math.pow(yVel * MapConfig.getVehiclesSpeed(), 2)));
 
-                if (distanceTravelled >= routeDistance) {
-                    distanceTravelled = 0;
-                    setMoving(false);
-                    setPosition(nextDestination.getPosition());
-                    //TUTAJ ARRIVE9
-                    setCurrentBuilding(getNextDestination());
-                    actualFuel = maxFuel;
-                    if (route.size() == 1) {
-                        setNextDestination(route.get(0));
-                        route.remove(0);
-                        randomizeRoute(nextDestination);
+                if (this.distanceTravelled >= routeDistance) {
+                    this.distanceTravelled = 0;
+                    this.setMoving(false);
+                    this.setPosition(this.nextDestination.getPosition());
+                    this.landed = true;
+                    this.nextDestination.addToVehicles(this);
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    this.nextDestination.deleteFromVehicles(this);
+                    this.landed = false;
+
+                    this.setCurrentBuilding(this.getNextDestination());
+                    this.actualFuel = this.maxFuel;
+                    if (this.route.size() == 1) {
+                        this.setNextDestination(this.route.get(0));
+                        this.route.remove(0);
+                        this.randomizeRoute(this.nextDestination);
                     } else {
-                        setNextDestination(route.get(0));
-                        route.remove(0);
+                        this.setNextDestination(this.route.get(0));
+                        this.route.remove(0);
                     }
                 }
             }
@@ -106,7 +122,7 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
     }
 
     public Building getNextDestination() {
-        return nextDestination;
+        return this.nextDestination;
     }
 
     void setNextDestination(Building nextDestination) {
@@ -118,7 +134,7 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
     }
 
     Building getCurrentBuilding() {
-        return currentBuilding;
+        return this.currentBuilding;
     }
 
     void setCurrentBuilding(Building currentBuilding) {
@@ -126,7 +142,7 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
     }
 
     private boolean isMoving() {
-        return moving;
+        return this.moving;
     }
 
     void setMoving(boolean moving) {
@@ -134,7 +150,7 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
     }
 
     public LinkedList<Building> getRoute() {
-        return route;
+        return this.route;
     }
 
     void setRoute(LinkedList<Building> route) {
@@ -142,7 +158,7 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
     }
 
     private void addToRoute(Building b) {
-        route.add(b);
+        this.route.add(b);
     }
 
     public void arrive() {
@@ -159,23 +175,23 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
     }
 
     void setDistanceTravelled() {
-        distanceTravelled = (float) 0;
+        this.distanceTravelled = (float) 0;
     }
 
     public void refuel() {
-        actualFuel = maxFuel;
+        this.actualFuel = this.maxFuel;
     }
 
     public float getMaxFuel() {
-        return maxFuel;
+        return this.maxFuel;
     }
 
     private void setMaxFuel() {
-        maxFuel = (float) 100;
+        this.maxFuel = (float) 100;
     }
 
     public float getActualFuel() {
-        return actualFuel;
+        return this.actualFuel;
     }
 
     private void setActualFuel(float actualFuel) {
@@ -183,11 +199,26 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
     }
 
     public String getUniqueId() {
-        return uniqueId;
+        return this.uniqueId;
     }
 
     void setUniqueId(String uniqueId) {
         this.uniqueId = uniqueId;
     }
 
+    public LinkedList<Passenger> getPassengerLinkedList() {
+        return this.passengerLinkedList;
+    }
+
+    public void addPassenger(Passenger passenger){
+        this.passengerLinkedList.add(passenger);
+    }
+
+    public void removePassenger(Passenger passenger){
+        this.passengerLinkedList.remove(passenger);
+    }
+
+    public boolean isLanded() {
+        return this.landed;
+    }
 }

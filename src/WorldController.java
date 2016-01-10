@@ -17,22 +17,22 @@ public class WorldController extends JPanel {
 
     private WorldController() {
 
-        mainFrame = new JFrame("JavaWorld");
+        this.mainFrame = new JFrame("JavaWorld");
 
-        setPreferredSize(new Dimension(1050, 800));
+        this.setPreferredSize(new Dimension(1050, 800));
 
-        mainFrame.getContentPane().add(this);
+        this.mainFrame.getContentPane().add(this);
 
-        mainFrame.pack();
+        this.mainFrame.pack();
 
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        mainFrame.setLocation(controlPanel.getFrame().getWidth(), 0);
+        this.mainFrame.setLocation(controlPanel.getFrame().getWidth(), 0);
 
-        mainFrame.addMouseListener(new MouseListener() {
+        this.mainFrame.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                setSelected(null);
+                WorldController.this.setSelected(null);
                 for (PhysicalObject object : mainMap.getObjectsToDraw()) {
                     Rectangle rect;
                     if (object.getImage() != null) {
@@ -40,8 +40,8 @@ public class WorldController extends JPanel {
                                 (int) object.getPosition().getY() - object.getImage().getHeight() / 2,
                                 object.getImage().getWidth(),
                                 object.getImage().getHeight());
-                        if (rect.contains(e.getX(), e.getY() - mainFrame.getInsets().top)) {
-                            setSelected(object);
+                        if (rect.contains(e.getX(), e.getY() - WorldController.this.mainFrame.getInsets().top)) {
+                            WorldController.this.setSelected(object);
                             object.inspect();
                             break;
                         }
@@ -72,8 +72,8 @@ public class WorldController extends JPanel {
             }
 
         });
-        mainFrame.setVisible(true);
-        infiniteLoop();
+        this.mainFrame.setVisible(true);
+        this.infiniteLoop();
 
     }
 
@@ -95,6 +95,10 @@ public class WorldController extends JPanel {
         vehicleInspector = new VehicleInspector();
         buildingInspector = new BuildingInspector();
         worldController = new WorldController();
+
+        for (int i = 0; i < 500; i++) {
+            mainMap.spawnPassenger();
+        }
     }
 
     public static Map getMainMap() {
@@ -106,7 +110,7 @@ public class WorldController extends JPanel {
     }
 
     private PhysicalObject getSelected() {
-        return selected;
+        return this.selected;
     }
 
     private void setSelected(PhysicalObject selected) {
@@ -116,7 +120,7 @@ public class WorldController extends JPanel {
     private void infiniteLoop() {
         Runnable r = () -> {
             while (true) {
-                repaint();
+                this.repaint();
                 if (controlPanel != null) {
                     MapConfig.setVehiclesSpeed(controlPanel.getVehiclesSpeedSlider().getValue() / 100.0f);
                 }
@@ -136,15 +140,15 @@ public class WorldController extends JPanel {
         for (int i = 0; i < mainMap.getObjectsToDraw().size(); i++) {
             mainMap.getObjectsToDraw().get(i).drawImage(g);
         }
-        drawSelection(g);
+        this.drawSelection(g);
     }
 
     private void drawSelection(Graphics g) {
-        if (getSelected() != null) {
-            g.drawRect((int) getSelected().getPosition().getX() - getSelected().getImage().getWidth() / 2,
-                    (int) getSelected().getPosition().getY() - getSelected().getImage().getWidth() / 2,
-                    getSelected().getImage().getHeight(),
-                    getSelected().getImage().getWidth());
+        if (this.getSelected() != null) {
+            g.drawRect((int) this.getSelected().getPosition().getX() - this.getSelected().getImage().getWidth() / 2,
+                    (int) this.getSelected().getPosition().getY() - this.getSelected().getImage().getWidth() / 2,
+                    this.getSelected().getImage().getHeight(),
+                    this.getSelected().getImage().getWidth());
         }
     }
 }

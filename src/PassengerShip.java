@@ -9,12 +9,12 @@ public class PassengerShip extends Ship {
     private final String companyName;
 
     public PassengerShip() {
-        companyName = "White Star Line";
+        this.companyName = "White Star Line";
         WorldController.getMainMap().addObjectToDraw(this);
-        setCurrentBuilding(MapConfig.getHarbors()[MapConfig.randInt(0,
+        this.setCurrentBuilding(MapConfig.getHarbors()[MapConfig.randInt(0,
                 MapConfig.getHarbors().length - 1)]);
-        setPosition(getCurrentBuilding().getPosition().getX(), getCurrentBuilding().getPosition().getY());
-        setSpeed(MapConfig.randInt(MapConfig.getMinVehicleSpeed(), MapConfig.getMaxVehicleSpeed()));
+        this.setPosition(this.getCurrentBuilding().getPosition().getX(), this.getCurrentBuilding().getPosition().getY());
+        this.setSpeed(MapConfig.randInt(MapConfig.getMinVehicleSpeed(), MapConfig.getMaxVehicleSpeed()));
     }
 
 
@@ -36,6 +36,6 @@ public class PassengerShip extends Ship {
         WorldController.getVehicleInspector().getPassengersLabel().setVisible(true);
         WorldController.getVehicleInspector().getCompanyNameLabel().setVisible(true);
         WorldController.getVehicleInspector().getCompanyValueLabel().setVisible(true);
-        WorldController.getVehicleInspector().getCompanyValueLabel().setText(companyName);
+        WorldController.getVehicleInspector().getCompanyValueLabel().setText(this.companyName);
     }
 }

@@ -6,12 +6,12 @@ class PassengerInfo {
     private int actualPassengerCount;
 
     public PassengerInfo() {
-        maxPassengerCount = MapConfig.randInt(MapConfig.getMinAirPassengers(), MapConfig.getMaxAirPassengers());
-        actualPassengerCount = MapConfig.randInt(0, maxPassengerCount);
+        this.maxPassengerCount = MapConfig.randInt(MapConfig.getMinAirPassengers(), MapConfig.getMaxAirPassengers());
+        this.actualPassengerCount = MapConfig.randInt(0, this.maxPassengerCount);
     }
 
     public int getMaxPassengerCount() {
-        return maxPassengerCount;
+        return this.maxPassengerCount;
     }
 
     public void setMaxPassengerCount(int maxPassengerCount) {
@@ -19,7 +19,7 @@ class PassengerInfo {
     }
 
     public int getActualPassengerCount() {
-        return actualPassengerCount;
+        return this.actualPassengerCount;
     }
 
     public void setActualPassengerCount(int actualPassengerCount) {

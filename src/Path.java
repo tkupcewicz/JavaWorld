@@ -9,13 +9,9 @@ public class Path extends PhysicalObject {
     private Position destination;
     private Position origin;
 
-    public Path() {
-
-    }
-
     public Path(Position a, Position b) {
-        destination = a;
-        origin = b;
+        this.destination = a;
+        this.origin = b;
     }
 
     public static Path calculatePath(Position A, Position B, int pathWidth) {
@@ -35,7 +31,7 @@ public class Path extends PhysicalObject {
     }
 
     public Position getDestination() {
-        return destination;
+        return this.destination;
     }
 
     public void setDestination(Position destination) {
@@ -43,7 +39,7 @@ public class Path extends PhysicalObject {
     }
 
     public Position getOrigin() {
-        return origin;
+        return this.origin;
     }
 
     public void setOrigin(Position origin) {
@@ -54,7 +50,8 @@ public class Path extends PhysicalObject {
     void drawImage(Graphics g) {
         if (MapConfig.isPathVisible()) {
             Graphics2D g2d = (Graphics2D) g;
-            Path tempPath = calculatePath(getOrigin(), getDestination(), MapConfig.getPathWidth());
+            //noinspection UnqualifiedMethodAccess,UnqualifiedMethodAccess
+            Path tempPath = calculatePath(this.getOrigin(), this.getDestination(), MapConfig.getPathWidth());
             g2d.drawLine((int) tempPath.getOrigin().getX(),
                     (int) tempPath.getOrigin().getY(),
                     (int) tempPath.getDestination().getX(),

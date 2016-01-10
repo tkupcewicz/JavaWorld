@@ -17,18 +17,18 @@ public class ControlPanel {
 
     public ControlPanel() {
 
-        frame = new JFrame("Control Panel");
+        this.frame = new JFrame("Control Panel");
 
-        crossroadBox.setSelected(MapConfig.isCrossroadVisible());
-        pathBox.setSelected(MapConfig.isPathVisible());
+        this.crossroadBox.setSelected(MapConfig.isCrossroadVisible());
+        this.pathBox.setSelected(MapConfig.isPathVisible());
 
-        frame.setContentPane(panel1);
-        frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setMinimumSize(new Dimension(100, 100));
-        frame.setVisible(true);
+        this.frame.setContentPane(this.panel1);
+        this.frame.pack();
+        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.frame.setMinimumSize(new Dimension(100, 100));
+        this.frame.setVisible(true);
 
-        crossroadBox.addItemListener(e -> {
+        this.crossroadBox.addItemListener(e -> {
 
             if (e.getStateChange() == 1) {
                 MapConfig.setCrossroadVisible(true);
@@ -36,7 +36,7 @@ public class ControlPanel {
                 MapConfig.setCrossroadVisible(false);
             }
         });
-        pathBox.addItemListener(e -> {
+        this.pathBox.addItemListener(e -> {
 
             if (e.getStateChange() == 1) {
                 MapConfig.setPathVisible(true);
@@ -44,14 +44,14 @@ public class ControlPanel {
                 MapConfig.setPathVisible(false);
             }
         });
-        button1.addActionListener(e -> spawnPlane());
-        spawnPassengerShipButton.addActionListener(e -> spawnPassShip());
-        spawnAircraftCarrierButton.addActionListener(e -> spawnCarrier());
+        this.button1.addActionListener(e -> this.spawnPlane());
+        this.spawnPassengerShipButton.addActionListener(e -> this.spawnPassShip());
+        this.spawnAircraftCarrierButton.addActionListener(e -> this.spawnCarrier());
         Hashtable labelTable = new Hashtable();
         labelTable.put(10, new JLabel("10%"));
         labelTable.put(100, new JLabel("100%"));
         labelTable.put(300, new JLabel("300%"));
-        vehiclesSpeedSlider.setLabelTable(labelTable);
+        this.vehiclesSpeedSlider.setLabelTable(labelTable);
 
 
     }
@@ -75,15 +75,15 @@ public class ControlPanel {
     }
 
     public JSlider getVehiclesSpeedSlider() {
-        return vehiclesSpeedSlider;
+        return this.vehiclesSpeedSlider;
     }
 
     public JPanel getPanel1() {
-        return panel1;
+        return this.panel1;
     }
 
     public JFrame getFrame() {
-        return frame;
+        return this.frame;
     }
 }
 

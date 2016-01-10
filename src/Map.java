@@ -11,34 +11,30 @@ public final class Map {
     private final LinkedList<Crossroad> crossroadsList;
     private final LinkedList<Building> airportList;
     private final LinkedList<Building> harborList;
+    private final LinkedList<Building> passBuildings;
 
     public Map() {
 
-        harborList = new LinkedList<>();
-        airportList = new LinkedList<>();
+        this.harborList = new LinkedList<>();
+        this.airportList = new LinkedList<>();
         objectsToDraw = new LinkedList<>();
 
-        loadHarbors();
-        loadPassAirports();
-        loadMiliAirports();
-
+        this.loadHarbors();
+        this.loadPassAirports();
+        this.passBuildings = new LinkedList<>(this.airportList);
+        this.loadMiliAirports();
+        this.passBuildings.addAll(this.harborList);
 
         LinkedList<Path> airPathList = new LinkedList<>();
         LinkedList<Path> seaPathList = new LinkedList<>();
-        createConnections(MapConfig.getHarbors(), harborList, seaPathList);
-        createConnections(MapConfig.getPassengerAirports(), airportList, airPathList);
-        createConnections(MapConfig.getMilitaryAirports(), airportList, airPathList);
+        this.createConnections(MapConfig.getHarbors(), this.harborList, seaPathList);
+        this.createConnections(MapConfig.getPassengerAirports(), this.airportList, airPathList);
+        this.createConnections(MapConfig.getMilitaryAirports(), this.airportList, airPathList);
 
 
-        crossroadsList = new LinkedList<>();
-        calculateCrossroads(airPathList);
-        calculateCrossroads(seaPathList);
-
-        //noinspection ForLoopReplaceableByForEach
-        for (Crossroad aCrossroadsList : crossroadsList) {
-            System.out.println(aCrossroadsList.getPosition());
-        }
-
+        this.crossroadsList = new LinkedList<>();
+        this.calculateCrossroads(airPathList);
+        this.calculateCrossroads(seaPathList);
 
     }
 
@@ -53,8 +49,8 @@ public final class Map {
                     Path two = new Path(l.get(x).getPosition(), a[i].getPosition());
                     pathlist.add(one);
                     pathlist.add(two);
-                    addObjectToDraw(one);
-                    addObjectToDraw(two);
+                    this.addObjectToDraw(one);
+                    this.addObjectToDraw(two);
                 }
             }
         }
@@ -83,8 +79,8 @@ public final class Map {
                         float yi = ((y3 - y4) * (x1 * y2 - y1 * x2) - (y1 - y2) * (x3 * y4 - y3 * x4)) / d;
 
                         Crossroad temp = new Crossroad(xi, yi);
-                        crossroadsList.add(temp);
-                        addObjectToDraw(temp);
+                        this.crossroadsList.add(temp);
+                        this.addObjectToDraw(temp);
 
                     }
                 }
@@ -103,22 +99,22 @@ public final class Map {
 
     private void loadPassAirports() {
         for (int i = 0; i < MapConfig.getPassengerAirports().length; i++) {
-            addObjectToDraw(MapConfig.getPassengerAirports()[i]);
-            addAirport(MapConfig.getPassengerAirports()[i]);
+            this.addObjectToDraw(MapConfig.getPassengerAirports()[i]);
+            this.addAirport(MapConfig.getPassengerAirports()[i]);
         }
     }
 
     private void loadMiliAirports() {
         for (int i = 0; i < MapConfig.getMilitaryAirports().length; i++) {
-            addObjectToDraw(MapConfig.getMilitaryAirports()[i]);
-            addAirport(MapConfig.getMilitaryAirports()[i]);
+            this.addObjectToDraw(MapConfig.getMilitaryAirports()[i]);
+            this.addAirport(MapConfig.getMilitaryAirports()[i]);
         }
     }
 
     private void loadHarbors() {
         for (int i = 0; i < MapConfig.getHarbors().length; i++) {
-            addObjectToDraw(MapConfig.getHarbors()[i]);
-            addHarbor(MapConfig.getHarbors()[i]);
+            this.addObjectToDraw(MapConfig.getHarbors()[i]);
+            this.addHarbor(MapConfig.getHarbors()[i]);
         }
     }
 
@@ -127,15 +123,24 @@ public final class Map {
     }
 
     private void addAirport(Airport a) {
-        airportList.add(a);
+        this.airportList.add(a);
     }
 
     private void addHarbor(Harbor h) {
-        harborList.add(h);
+        this.harborList.add(h);
     }
 
     public LinkedList<Building> getAirportList() {
-        return airportList;
+        return this.airportList;
     }
 
+    public LinkedList<Building> getPassBuildings() {
+        return this.passBuildings;
+    }
+
+    public void spawnPassenger(){
+        Runnable r = new Passenger();
+        Thread t = new Thread(r);
+        t.start();
+    }
 }
