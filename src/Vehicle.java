@@ -1,7 +1,6 @@
 import com.sun.javafx.geom.Point2D;
-
 import java.util.LinkedList;
-
+import java.util.UUID;
 import static java.lang.Math.atan2;
 
 /**
@@ -10,13 +9,20 @@ import static java.lang.Math.atan2;
 
 public abstract class Vehicle extends PhysicalObject implements Runnable {
     private String uniqueId;
+    private float maxFuel;
+    private float actualFuel;
     private int speed;
     private Building nextDestination;
     private Building currentBuilding;
     private LinkedList<Building> route;
-    abstract void moveTo();
     private float distanceTravelled;
     private boolean moving;
+
+    public Vehicle() {
+        this.setUniqueId(UUID.randomUUID().toString());
+        this.setMaxFuel(100);
+        this.setActualFuel(this.getMaxFuel());
+    }
 
     float calculateXVel(float posX, float posY, float tarX, float tarY){
         float angle = (float) atan2(tarY-posY, tarX-posX);
@@ -52,16 +58,14 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
         while(true) {
             if(!this.isMoving()){
                 Path temp = Path.calculatePath(this.getPosition(),
-                        this.getNextDestination().getPosition(), 30);
+                        this.getNextDestination().getPosition(), -7);
                 routeDistance = Point2D.distance(temp.getOrigin().getX(), temp.getOrigin().getY(),
                         temp.getDestination().getX(), temp.getDestination().getY());
-                //WorldController.getMainMap().addObjectToDraw(temp);
+                this.setPosition(temp.getDestination().getX(), temp.getDestination().getY());
 
                 xVel = calculateXVel(temp.getDestination().getX(), temp.getDestination().getY(), temp.getOrigin().getX(), temp.getOrigin().getY());
                 yVel = calculateYVel(temp.getDestination().getX(), temp.getDestination().getY(), temp.getOrigin().getX(), temp.getOrigin().getY());
 
-//                xVel = calculateXVel(this.getCurrentBuilding().getPosition().getX(), this.getCurrentBuilding().getPosition().getY(), this.getNextDestination().getPosition().getX(), this.getNextDestination().getPosition().getY());
-//                yVel = calculateYVel(this.getCurrentBuilding().getPosition().getX(), this.getCurrentBuilding().getPosition().getY(), this.getNextDestination().getPosition().getX(), this.getNextDestination().getPosition().getY());
                 this.setMoving(true);
             }
             else{
@@ -69,6 +73,8 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
                 float tmpy = this.getPosition().getY();
                 tmpx = tmpx + xVel * MapConfig.getVehiclesSpeed();
                 tmpy = tmpy + yVel * MapConfig.getVehiclesSpeed();
+                this.setActualFuel(this.getActualFuel() - 0.15f * MapConfig.getVehiclesSpeed());
+
                 this.setPosition(tmpx, tmpy);
                 distanceTravelled = (float) (distanceTravelled + Math.sqrt(Math.pow(xVel * MapConfig.getVehiclesSpeed(), 2) + Math.pow(yVel * MapConfig.getVehiclesSpeed(), 2)));
 
@@ -76,8 +82,9 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
                     distanceTravelled = 0;
                     this.setMoving(false);
                     this.setPosition(this.nextDestination.getPosition());
+                    //TUTAJ ARRIVE9
                     this.setCurrentBuilding(this.getNextDestination());
-                    this.arrive();
+                    this.actualFuel = this.maxFuel;
                     if(this.route.size() == 1){
                         this.setNextDestination(this.route.get(0));
                         this.route.remove(0);
@@ -104,10 +111,6 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
 
     public void setNextDestination(Building nextDestination) {
         this.nextDestination = nextDestination;
-    }
-
-    public int getSpeed() {
-        return speed;
     }
 
     public void setSpeed(int speed) {
@@ -155,6 +158,7 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
     public void inspect(){
         WorldController.getVehicleInspector().setSelectedVehicle(this);
         WorldController.getVehicleInspector().getFrame().setVisible(true);
+        WorldController.getBuildingInspector().getFrame().setVisible(false);
     }
 
     public void setDistanceTravelled(float distanceTravelled) {
@@ -164,4 +168,29 @@ public abstract class Vehicle extends PhysicalObject implements Runnable {
     public void setRoute(LinkedList<Building> route) {
         this.route = route;
     }
+
+    public void refuel(){
+        this.actualFuel = this.maxFuel;
+    }
+
+    public float getMaxFuel() {
+        return maxFuel;
+    }
+
+    public void setMaxFuel(float maxFuel) {
+        this.maxFuel = maxFuel;
+    }
+
+    public float getActualFuel() {
+        return actualFuel;
+    }
+
+    public void setActualFuel(float actualFuel) {
+        this.actualFuel = actualFuel;
+    }
+
+    public String getUniqueId() {
+        return uniqueId;
+    }
+
 }

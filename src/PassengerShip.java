@@ -9,7 +9,8 @@ public class PassengerShip extends Ship {
     private String companyName;
 
     public PassengerShip() {
-        this.setUniqueId(UUID.randomUUID().toString());
+        super();
+        this.companyName = "White Star Line";
         WorldController.getMainMap().addObjectToDraw(this);
         this.setCurrentBuilding(MapConfig.getHarbors()[MapConfig.randInt(0,
                 MapConfig.getHarbors().length - 1)]);
@@ -24,11 +25,6 @@ public class PassengerShip extends Ship {
     }
 
     @Override
-    void moveTo() {
-
-    }
-
-    @Override
     public void flyToNearest() {
 
     }
@@ -39,5 +35,8 @@ public class PassengerShip extends Ship {
         WorldController.getVehicleInspector().getSpawnPlaneButton().setVisible(false);
         WorldController.getVehicleInspector().getPassengerPane().setVisible(true);
         WorldController.getVehicleInspector().getPassengersLabel().setVisible(true);
+        WorldController.getVehicleInspector().getCompanyNameLabel().setVisible(true);
+        WorldController.getVehicleInspector().getCompanyValueLabel().setVisible(true);
+        WorldController.getVehicleInspector().getCompanyValueLabel().setText(this.companyName);
     }
 }

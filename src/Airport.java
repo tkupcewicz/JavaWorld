@@ -11,4 +11,8 @@ public abstract class Airport extends Building {
     public Airport(){
         this.aircraftCapacity = MapConfig.randInt(MapConfig.getMinAirportCapacity(), MapConfig.getMaxAirportCapacity());
     }
+    public void inspect(){
+        super.inspect();
+        WorldController.getBuildingInspector().setVehicleTypeLabel("Planes: ");
+    }
 }

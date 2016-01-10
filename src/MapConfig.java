@@ -8,27 +8,6 @@ import java.util.Random;
  * Created by Tymek on 30.12.2015.
  */
 
-
-/*
-@TODO
-Paliwo i inne pierdoly w samolotach
-Inspector:
--jego trasy
--jego informacji
-
-Samoloty:
- -max lp
- -aktualna lp
- -liczba personelu
- -stan paliwa
-
-Wojskowe:
- -bron
-
-
-
-
-*/
 public final class MapConfig {
 
     private static BufferedImage passAirportImg;
@@ -104,7 +83,7 @@ public final class MapConfig {
     }
     static {
         try {
-            crossroadImg = ImageIO.read(new File("resources/crossroad.png"));
+            crossroadImg = ImageIO.read(new File("resources/circle.png"));
 
         } catch (IOException e) {
 

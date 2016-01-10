@@ -1,6 +1,4 @@
 import javax.swing.*;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 /**
  * Created by Tymek on 08.01.2016.
@@ -14,11 +12,15 @@ public class VehicleInspector {
     private JList passengerList;
     private JLabel nextDestinationLabel;
     private JButton deleteButton;
-    private JButton button1;
-    private JButton button2;
+    private JButton addRouteButton;
+    private JButton delRouteButton;
     private JButton spawnPlaneButton;
     private JScrollPane passengerPane;
     private JLabel passengersLabel;
+    private JLabel idLabel;
+    private JProgressBar fuelBar;
+    private JLabel companyNameLabel;
+    private JLabel companyValueLabel;
     private JFrame frame;
     private Vehicle selectedVehicle;
 
@@ -33,6 +35,7 @@ public class VehicleInspector {
     public VehicleInspector(){
         frame = new JFrame("Vehicle Inspector");
         frame.setContentPane(this.jpanel);
+        frame.setLocation(0, WorldController.getControlPanel().getFrame().getHeight());
         frame.pack();
         infiniteLoop();
 
@@ -43,6 +46,9 @@ public class VehicleInspector {
         spawnPlaneButton.addActionListener(e -> {
             this.spawnMilitaryPlane();
         });
+        delRouteButton.setEnabled(false);
+        addRouteButton.setEnabled(false);
+
     }
 
     public JFrame getFrame() {
@@ -53,10 +59,14 @@ public class VehicleInspector {
         Runnable r = () -> {
             while (true) {
                 if(selectedVehicle != null){
+                    fuelBar.setMaximum((int) selectedVehicle.getMaxFuel());
                     nextDestinationLabel.setText(String.valueOf(selectedVehicle.getNextDestination()));
                     xLabel.setText(String.valueOf(selectedVehicle.getPosition().getX()));
                     yLabel.setText(String.valueOf(selectedVehicle.getPosition().getY()));
+                    idLabel.setText(String.valueOf(selectedVehicle.getUniqueId()));
                     routeList.setListData(selectedVehicle.getRoute().toArray());
+                    fuelBar.setValue((int) selectedVehicle.getActualFuel());
+                    routeList.setEnabled(false);
                 }
 
                 jpanel.repaint();
@@ -93,5 +103,22 @@ public class VehicleInspector {
 
     public JLabel getPassengersLabel() {
         return passengersLabel;
+    }
+
+    public void delRoute(Building b){
+        int x = selectedVehicle.getRoute().indexOf(b);
+        selectedVehicle.getRoute().subList(x, selectedVehicle.getRoute().size()).clear();
+    }
+
+    public JLabel getCompanyNameLabel() {
+        return companyNameLabel;
+    }
+
+    public JLabel getCompanyValueLabel() {
+        return companyValueLabel;
+    }
+
+    public JButton getEmergencyLandingButton() {
+        return emergencyLandingButton;
     }
 }

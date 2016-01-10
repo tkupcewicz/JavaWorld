@@ -13,18 +13,18 @@ public class ControlPanel {
     private JSlider vehiclesSpeedSlider;
     private JButton spawnPassengerShipButton;
     private JButton spawnAircraftCarrierButton;
+    private JFrame frame;
 
     public ControlPanel() {
 
-        JFrame frame = new JFrame("Control Panel");
+        frame = new JFrame("Control Panel");
 
         crossroadBox.setSelected(MapConfig.isCrossroadVisible());
         pathBox.setSelected(MapConfig.isPathVisible());
 
-
-
         frame.setContentPane(this.panel1);
         frame.pack();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setMinimumSize(new Dimension(100, 100));
         frame.setVisible(true);
 
@@ -84,5 +84,12 @@ public class ControlPanel {
         return vehiclesSpeedSlider;
     }
 
+    public JPanel getPanel1() {
+        return panel1;
+    }
+
+    public JFrame getFrame() {
+        return frame;
+    }
 }
 
