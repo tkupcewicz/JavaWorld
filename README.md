@@ -14,3 +14,10 @@ Time spent at airport/harbor is set up to 2 seconds, so don't panic if vehicles 
 Passengers are automatically spawned proportionally to passenger vehicles and their capacity.
 
 All buttons which are disable have partially implemented methods, or have some bugs.
+
+Have fun!
+
+Also, some fun content made during writing this project:
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=WWGClYYGYSc
+" target="_blank"><img src="http://img.youtube.com/vi/WWGClYYGYSc/0.jpg" 
+alt="Text" width="240" height="180" border="10" /></a>
