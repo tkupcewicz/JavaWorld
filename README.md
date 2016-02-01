@@ -15,8 +15,6 @@ Passengers are automatically spawned proportionally to passenger vehicles and th
 
 All buttons which are disable have partially implemented methods, or have some bugs.
 
-Have fun!
-
 Also, some fun content made during writing this project:
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=WWGClYYGYSc
